@@ -1,0 +1,30 @@
+{% extends 'app1/base.html' %}
+{% block body_block %}
+<h1>Search Page</h1>
+<form action="{% url 'app1:search' %}" method="POST" value="{{request.GET.q}}">
+	{% csrf_token %}
+	<label for='q'>SEARCH</label>
+	<input type="text" name="q" values="{{request.GET.q}}" placeholder="Search Here">
+	<input type="submit" name="submit" value="search">
+</form>
+
+
+{% if result %}
+	<h2>Results for <b>{{ request.GET.q }}</b></h2>
+		<br/><br/>
+	<h3>{{result.email}}</h3>
+	{% if is_friend is True %}
+		<button type="submit" name='add'>Add</button>
+			<br/>
+	{% else %}
+		<h3>This User is already a Friend</h3>
+	{% endif %}
+
+
+{% else %}
+
+	<h2>No Search Result</h2>	
+{% endif %}
+{% endblock %}
+
+
