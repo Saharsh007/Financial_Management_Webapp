@@ -13,9 +13,11 @@
 	<h2>Results for <b>{{ request.GET.q }}</b></h2>
 		<br/><br/>
 	<h3>{{result.email}}</h3>
-	{% if is_friend is True %}
-		<button type="submit" name='add'>Add</button>
-			<br/>
+	{% if is_friend is not True %}
+		<form action="{% url 'app1:search' %}" method="POST" >
+			{% csrf_token %}
+			<input type="submit" name="add" value='add'>
+		</form>
 	{% else %}
 		<h3>This User is already a Friend</h3>
 	{% endif %}

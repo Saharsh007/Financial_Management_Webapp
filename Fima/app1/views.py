@@ -65,30 +65,44 @@ def user_login(request):
 	else:
 		return render(request, 'app1/login.html', {})
 
+add_friend=None
 @login_required
 def user_search(request):
+	global add_friend
 	if(request.method=='POST'):
 		print("I am in if 1")
-		query=request.POST['q']
-		print(query)
+		query=request.POST.get('q')
+		# print(query)
 		cur_user=request.user
-		if(query is not None):
+		# print(request.POST.get('add'),add_friend)
+		if(request.POST.get('add') and add_friend):
+			f1=Friends()
+			f1.user_id1=User.objects.get(id=request.user.id)
+			f1.user_id2=User.objects.get(id=add_friend.id)
+			f1.save()
+			f2=Friends()
+			f2.user_id2=User.objects.get(id=request.user.id)
+			f2.user_id1=User.objects.get(id=add_friend.id)
+			f2.save()
+			return HttpResponse('Friend Has been Added Succesfully')
+		elif(query is not None):
 			is_exist=False
 			result=User.objects.filter(email=query)
 			if(result.exists() and result[0].username!=request.user.username):
-				print(request.user.username)
+				# print(request.user.username)
 				is_friend=False;
 				is_friend_query=Friends.objects.filter(user_id1=request.user.id,
 					user_id2=result[0].id)
 				if(is_friend_query.exists()):
 					is_friend=True
+				else:
+					add_friend=result[0]
 				return render(request,'app1/search.html',{'result':result[0],'is_friend':is_friend})
 			else:
 				return render(request,'app1/search.html')
 
 		else:
 			return render(request,'app1/search.html')
-
 	else:
 		print("I am in else 1")
 		return render(request,'app1/search.html')
