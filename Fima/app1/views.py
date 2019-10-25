@@ -4,10 +4,11 @@ from django.contrib.auth import authenticate,login,logout
 from django.urls import reverse
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
-from app1.models import CurrentTransaction,Friends
+from app1.models import CurrentTransaction,Friends,UserProfileInfo
 from django.contrib.auth.models import User
-# from app1.forms import TransactionForm
-from app1.models import CurrentTransaction
+
+from app1.forms import TransactionForm
+from django.utils import timezone
 # Create your views here.
 
 def index(request):
@@ -109,55 +110,62 @@ def user_search(request):
 		print("I am in else 1")
 		return render(request,'app1/search.html')
 
-# @login_required
-# def make_transaction(request):
-# 	if(request.method=='POST'):
-# 		form=TransactionForm(request.POST)
-# 		is_click=True;
-# 		 if(form.is_valid()):
-# 		 	email=form.cleaned_data['Email']
-# 		 	action=form.cleaned_data['Action']
-# 		 	amount=form.cleaned_data['Amount']
-# 		 	desc=form.cleaned_data['Desc']
-# 		 	to_user=User.objects.filter(email=email)
-# 		 	if(to_user.exists()):
-# 			 	to_friend=Friends.objects.filter(user_id1=request.user.id,
-# 						user_id2=to_user[0].id)
-# 			 	if(to_friend.exists()):
-# 			 		new_transaction=CurrentTransaction()
-# 			 		if(action=='Lent'):
-# 			 			new_transaction.user_id1=request.user
-# 			 			new_transaction.user_id2=to_friend[0];
-# 			 			new_transaction.lent=UserProfileInfo.objects.filter(email=
-# 			 				request.user.email)[0].name
-# 			 			new_transaction.borrowed=UserProfileInfo.objects.filter(email=
-# 			 				to_friend[0].email)[0].name
-			 			
-# 			 		else:
-# 			 			new_transaction.user_id2=request.user
-# 			 			new_transaction.user_id1=to_friend[0];
-# 			 			new_transaction.borrowed=UserProfileInfo.objects.filter(email=
-# 			 				request.user.email)[0].name
-# 			 			new_transaction.lent=UserProfileInfo.objects.filter(email=
-# 			 				to_friend[0].email)[0].name
 
-# 			 		new_transaction.amount=amount
-# 			 		new_transaction.desc=desc
-# 			 		new_transaction.datetime.now()
-# 			 		new_transaction.save();
-# 			 		return render(request,'app1/transaction.html',{'to_friend':to_friend})
 
-# 			 	else
-# 			 		return render(request,'app1/transaction.html',{'to_user':to_user}) 
 
-# 			else:
-# 				return render(request,'app1/transaction.html',{'is_click',is_click})
 
-# 		else:
-# 			ValidationError(_('Invalid value'), code='invalid')
+@login_required
+def make_transaction(request):
+	if(request.method=='POST'):
+		form=TransactionForm(request.POST)
+		is_click=True;
+		if(form.is_valid()):
+			email=form.cleaned_data['Email']
+			action=form.cleaned_data['Action']
+			amount=form.cleaned_data['Amount']
+			desc=form.cleaned_data['Desc']
+			to_user=User.objects.filter(email=email)
+			if(to_user.exists()):
+				to_friend=Friends.objects.filter(user_id1=request.user.id,
+						user_id2=to_user[0].id)
+				if(to_friend.exists()):
+					new_transaction=CurrentTransaction()
+					print(UserProfileInfo.objects.filter(user_id=
+							to_friend[0].user_id2.id))
+					if(action=='Lent'):
+						new_transaction.user_id1=request.user
+						new_transaction.user_id2=User.objects.get(id=to_friend[0].user_id2.id)
+						new_transaction.lent=UserProfileInfo.objects.filter(user=
+							request.user)[0].name
+						new_transaction.borrowed=UserProfileInfo.objects.filter(user=
+							to_friend[0].user_id2)[0].name
+						
+					else:
+						new_transaction.user_id2=request.user
+						new_transaction.user_id1=User.objects.get(id=to_friend[0].user_id2.id)
+						new_transaction.borrowed=UserProfileInfo.objects.filter(user=
+							request.user)[0].name
+						new_transaction.lent=UserProfileInfo.objects.filter(user=
+							to_friend[0].user_id2)[0].name
 
-# 	else:
-# 		return render(request,'app1/transaction.html')
+					new_transaction.amount=amount
+					new_transaction.desc=desc
+					new_transaction.tdate=timezone.now()
+					new_transaction.save();
+					return render(request,'app1/transaction.html',{'to_friend':to_friend,'form':form})
+
+				else:
+					return render(request,'app1/transaction.html',{'to_user':to_user,'form':form}) 
+
+			else:
+				return render(request,'app1/transaction.html',{'is_click':is_click,'form':form})
+
+		else:
+			ValidationError(_('Invalid value'), code='invalid')
+
+	else:
+		form=TransactionForm()
+		return render(request,'app1/transaction.html',{'form':form})
 
 
 
