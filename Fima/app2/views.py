@@ -5,20 +5,41 @@ from django.http import HttpResponseRedirect, HttpResponse
 
 # Create your views here.
 
-def home(request):
-    # FOR POST METHOD
+passed_email = ""
+
+def all_trans(request):
+    current_user = request.user
+    curr_user_email = str( current_user.get_username() ) #got current user
+    trans_record = CurrentTransaction.objects.order_by('tdate')
+    # print(search_id)
+
+     # FOR POST METHOD
     if request.method == 'POST':
         search_id = request.POST.get('friend_id')
-        print(search_id)
-        return HttpResponse( search_id)
+        passed_email = search_id
+
+        print(passed_email)
+        # print("somehitn")
+        # print(passed_email)
+
+        trans_record = {'trans_record':trans_record , 'curr_user':curr_user_email,'required_email':passed_email,'combined_email':[curr_user_email,passed_email]}
+        return render(request,'app2/all_trans.html',trans_record)    
+    else:
+        return render(request,'app2/all_trans.html')    
 
 
 
+    # current_user = request.user
+    # curr_user_email = str( current_user.get_username() ) #got current user
+    # trans_record = CurrentTransaction.objects.order_by('tdate')
+    # print("somehitn")
+    # print(passed_email)
+    # trans_record = {'trans_record':trans_record , 'curr_user':curr_user_email,'required_email':passed_email}
+    # return render(request,'app2/all_trans',trans_record)    
+    
 
-
-
-
-
+def home(request):
+   
     current_user = request.user
     curr_user_email = str( current_user.get_username() ) #got current user
 
@@ -46,12 +67,11 @@ def home(request):
     for users in all_user:
         if friends_name[ str(users.user) ] == 'none':
             friends_name[ str(users.user) ] = users.name
-            # print( friends_name[ str(users.user) ] , str(users.user))
-        # print(k,friends_amount[k])
+
     friends_name.pop(curr_user_email) # idk how current user was also getting added to the dict
     
-    for key,_ in friends_name.items():
-        print(friends_name[key],friends_amount[key])
+    # for key,_ in friends_name.items():
+    #     print(friends_name[key],friends_amount[key])
     
     # friends_name and friends_amount are two dict having email as key and name and amount as value 
     trans_dict = {'names': friends_name,'amount':friends_amount, 'TITLE':'HOME','curr_user':current_user.get_username()}

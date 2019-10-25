@@ -8,5 +8,5 @@ urlpatterns = [
     path('special',views.special,name='special'),
     path('logout',views.user_logout,name='logout'),
     path('search',views.user_search,name='search'),
-    path('transaction',view.make_transaction,name='transaction')
+    # path('transaction',view.make_transaction,name='transaction')
 ]
