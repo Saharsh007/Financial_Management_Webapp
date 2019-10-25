@@ -1,0 +1,13 @@
+{% extends "app1/base.html" %}
+{% block body_block %}
+<div class="container">
+  <div class="jumbotron">
+  	<form action="{% url 'app1:transaction' %}" , method='POST'>
+  		{{form}}
+  	</form>
+  	{% if to_friend %}
+  		<h2>Transaction Successfull</h2>
+  	{% elif}
+  </div>
+</div>
+{% endblock %}
