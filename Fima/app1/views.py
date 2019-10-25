@@ -1,11 +1,12 @@
 from django.shortcuts import render
-from app1.forms import UserForm,UserProfileInfoForm
+# from app1.forms import UserForm,UserProfileInfoForm
 from django.contrib.auth import authenticate,login,logout
 from django.urls import reverse
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from app1.models import CurrentTransaction,Friends,UserProfileInfo
 from django.contrib.auth.models import User
+
 from app1.forms import TransactionForm
 from django.utils import timezone
 # Create your views here.

@@ -63,7 +63,7 @@
             
             <!-- test -->
             <div>
-            <form method ="POST">
+            <form action="{% url 'app2:all_trans' %}" method ="POST">
                 {%csrf_token%}
                 <input type ="hidden" name = "friend_id" value="{{email}}" />
                 <button  class="pricingTable-firstTable_table__getstart"  type="submit" >VIEW TRANSACTIONS</button>

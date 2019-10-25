@@ -3,6 +3,7 @@
 <div class="container">
   <div class="jumbotron">
   	<form action="{% url 'app1:transaction' %}" , method='POST'>
+
   		{% csrf_token %}
   		{{form.as_p}}
   		<input type="submit" name="" value="Add Transaction">
