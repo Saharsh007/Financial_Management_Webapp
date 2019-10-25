@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+{% load my_extra %}
+
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>HOME</title>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel = 'stylesheet' href ="{% static "css/home_css.css" %}"/> 
+
+</head>
+<body>
+
+  <!-- navbar -->
+  <nav class="navbar navbar-default navbar-static-top">
+      <div class="container">
+        <ul class="nav navbar-nav">
+<!-- {# Django Home Link / Admin Link / Register Link#} -->
+          <li><a class="navbar-brand" href="{% url 'index' %}">DJANGO</a></li>
+          <li><a class="navbar-link" href="{% url 'admin:index' %}">Admin</a></li>
+          <li><a class="navbar-link" href="{% url 'app2:home' %}">Home</a></li>
+
+          <li><a class="navbar-link" href="{% url 'app1:register' %}">Register</a></li>
+          <!-- {# Some logic on what to display for last item#} -->
+          {% if user.is_authenticated %}
+            <li><a class="navbar-link" href="#">{{request.user.get_username}}</a></li>
+            <li><a href="{% url 'app1:logout' %}">Logout</a></li>
+          {% else %}
+            <li><a class="navbar-link" href="{% url 'app1:login' %}">Login</a></li>
+          {% endif %}
+        </ul>
+      </div>
+    </nav>
+    <!-- navbar end -->
+
+
+
+<!-- partial:index.partial.html -->
+<div class="pricingTable">
+  <h2 class="pricingTable-title">FINANCIAL MANAGEMENT</h2>
+  <h3 class="pricingTable-subtitle">Your Finances</h3>
+  
+  {% if names %}
+
+  <ul class="pricingTable-firstTable">
+        {%  for email in amount %}
+        <li class="pricingTable-firstTable_table">
+            <h1 class="pricingTable-firstTable_table__header">{{ names|value_of_key:email}}</h1>
+            {% if amount|check_pos:email %}
+            <p class="pricingTable-firstTable_table__pricing"><span style='color: rgb(0, 255, 0)'>₹</span><span style='color:rgb(0, 255, 0)'>{{ amount|return_pos:email}}</span><span>Month</span></p>
+
+            {% else %}
+            <p class="pricingTable-firstTable_table__pricing"><span style='color: rgb(255, 115, 0)'>₹</span><span style='color:rgb(255, 115, 0)'>{{ amount|return_pos:email}}</span><span>Month</span></p>
+            {%endif%}
+
+            <ul class="pricingTable-firstTable_table__options">
+              <li>{{email}}</li>
+
+            </ul>
+            <!-- <div class="pricingTable-firstTable_table__getstart">View All Transactions</div> -->
+            
+            <!-- test -->
+            <div>
+            <form method ="POST">
+                {%csrf_token%}
+                <input type ="hidden" name = "friend_id" value="{{email}}" />
+                <button  class="pricingTable-firstTable_table__getstart"  type="submit" >VIEW TRANSACTIONS</button>
+            </form>
+            </div>  
+            <!-- testend -->
+
+          </li>
+        {% endfor %}
+        
+    </ul>
+  </div>
+
+  {%else%}
+  <p>No TRANSACTIONS records found</p>  
+  {%endif%}
+   
+
+
+
+<!-- partial -->
+  <script  src="./script.js"></script>
+
+</body>
+</html>

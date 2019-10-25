@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'app1',
+    'app2',
 ]
 
 MIDDLEWARE = [
@@ -81,7 +82,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME':'fimadb',
         'USER':'root',
-        'PASSWORD':'mysql',
+        'PASSWORD':'1708',
         'HOST':'localhost',
         'PORT':'',
     }
@@ -127,5 +128,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS=[STATIC_DIR,]
 
-MEDIA_ROOT=MEDIA_DIR
 MEDIA_URL='/media/'
+MEDIA_ROOT=[MEDIA_DIR,]
