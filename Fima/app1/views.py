@@ -1,13 +1,13 @@
 from django.shortcuts import render
-from app1.forms import UserForm,UserProfileInfoForm
+# from app1.forms import UserForm,UserProfileInfoForm
 from django.contrib.auth import authenticate,login,logout
 from django.urls import reverse
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
-from app1.models import CurrentTransaction,Friends
+from app1.models import CurrentTransaction,Friends,UserProfileInfo
 from django.contrib.auth.models import User
+
 from app1.forms import TransactionForm
-from app1.models import CurrentTransaction
 from django.utils import timezone
 # Create your views here.
 
@@ -130,21 +130,23 @@ def make_transaction(request):
 						user_id2=to_user[0].id)
 				if(to_friend.exists()):
 					new_transaction=CurrentTransaction()
+					print(UserProfileInfo.objects.filter(user_id=
+							to_friend[0].user_id2.id))
 					if(action=='Lent'):
 						new_transaction.user_id1=request.user
-						new_transaction.user_id2=to_friend[0];
-						new_transaction.lent=UserProfileInfo.objects.filter(email=
-							request.user.email)[0].name
-						new_transaction.borrowed=UserProfileInfo.objects.filter(email=
-							to_friend[0].email)[0].name
+						new_transaction.user_id2=User.objects.get(id=to_friend[0].user_id2.id)
+						new_transaction.lent=UserProfileInfo.objects.filter(user=
+							request.user)[0].name
+						new_transaction.borrowed=UserProfileInfo.objects.filter(user=
+							to_friend[0].user_id2)[0].name
 						
 					else:
 						new_transaction.user_id2=request.user
-						new_transaction.user_id1=to_friend[0];
-						new_transaction.borrowed=UserProfileInfo.objects.filter(email=
-							request.user.email)[0].name
-						new_transaction.lent=UserProfileInfo.objects.filter(email=
-							to_friend[0].email)[0].name
+						new_transaction.user_id1=User.objects.get(id=to_friend[0].user_id2.id)
+						new_transaction.borrowed=UserProfileInfo.objects.filter(user=
+							request.user)[0].name
+						new_transaction.lent=UserProfileInfo.objects.filter(user=
+							to_friend[0].user_id2)[0].name
 
 					new_transaction.amount=amount
 					new_transaction.desc=desc
@@ -162,7 +164,7 @@ def make_transaction(request):
 			ValidationError(_('Invalid value'), code='invalid')
 
 	else:
-		form=form=TransactionForm()
+		form=TransactionForm()
 		return render(request,'app1/transaction.html',{'form':form})
 
 

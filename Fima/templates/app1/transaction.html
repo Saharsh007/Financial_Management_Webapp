@@ -3,11 +3,18 @@
 <div class="container">
   <div class="jumbotron">
   	<form action="{% url 'app1:transaction' %}" , method='POST'>
-  		{{form}}
+
+  		{% csrf_token %}
+  		{{form.as_p}}
+  		<input type="submit" name="" value="Add Transaction">
   	</form>
   	{% if to_friend %}
   		<h2>Transaction Successfull</h2>
-  	{% elif}
+  	{% elif to_user %}
+  		<h2>This User Is not your friend , first add him in friend page</h2>
+  	{% elif is_click %}
+  		<h2>This user does not exist</h2>
+  	{% endif %}
   </div>
 </div>
 {% endblock %}

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+{% load my_extra %}
+
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>TRANSACTIONS</title>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel = 'stylesheet' href ="{% static "css/home_css.css" %}"/> 
+
+</head>
+<body>
+
+  <!-- navbar -->
+  <nav class="navbar navbar-default navbar-static-top">
+      <div class="container">
+        <ul class="nav navbar-nav">
+<!-- {# Django Home Link / Admin Link / Register Link#} -->
+          <li><a class="navbar-brand" href="{% url 'index' %}">DJANGO</a></li>
+          <li><a class="navbar-link" href="{% url 'admin:index' %}">Admin</a></li>
+          <li><a class="navbar-link" href="{% url 'app2:home' %}">Home</a></li>
+
+          <li><a class="navbar-link" href="{% url 'app1:register' %}">Register</a></li>
+          <!-- {# Some logic on what to display for last item#} -->
+          {% if user.is_authenticated %}
+            <li><a class="navbar-link" href="#">{{request.user.get_username}}</a></li>
+            <li><a href="{% url 'app1:logout' %}">Logout</a></li>
+          {% else %}
+            <li><a class="navbar-link" href="{% url 'app1:login' %}">Login</a></li>
+          {% endif %}
+        </ul>
+      </div>
+    </nav>
+    <!-- navbar end -->
+
+
+    <div class = "djangotwo"> 
+            {% if trans_record %}
+            <table>
+                <thead>
+                    <th>amount : </th>
+                    <th>date : </th>
+                    <th>desc : </th>
+                </thead>
+                {%  for t in trans_record %}
+                        <tr>
+                    {% if  t|check_for_this_user_transaction:combined_email %}    
+                        {% if t|find_trans:curr_user %}
+                                <td style='color:rgb(255, 115, 0)'>{{t.amount}}</td>
+                        {% else %}
+                            <tr>
+                                <td style = 'color:rgb(0, 255, 7)'>{{t.amount}}</td>
+                        {%endif%}
+
+                                <td>{{t.tdate }}</td>
+                                <td>{{t.desc}}</td>
+                            </tr>
+                    {%endif%}
+                {% endfor %}
+            </table>
+            {%else%}
+                <p>No transaction records found</p>
+            {%endif%}
+        
+         </div>
+
+</body>
+</html>

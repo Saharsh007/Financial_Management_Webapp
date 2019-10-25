@@ -3,7 +3,8 @@
 
 
 ## app1
-- login,register,search and add friend
+- login,register,search and add friend , add transaction
+
 ## app2
 - friend list with amount
 

@@ -29,3 +29,39 @@ def return_pos(dictionary,key):
     """
 
     return abs(dictionary[key])
+
+
+@register.filter(name='find_trans')
+
+def find_trans(trans,curr_email):
+    """
+    This returns if the  transactions which has user1 as curr_user
+    """
+    if str(trans.user_id1) == curr_email:
+        return True
+    else:
+        return False 
+
+
+        
+
+
+
+@register.filter(name='check_for_this_user_transaction')
+
+def check_for_this_user_transaction(trans,emails):
+    """
+    This returns if the  transactions which has user1 as curr_user
+    """
+    if str(trans.user_id1) == emails[0]:
+        if str(trans.user_id2) == emails[1]:
+            return True
+        else:
+            return False
+    elif str(trans.user_id1) == emails[1]:
+        if str(trans.user_id2) == emails[0]:
+            return True
+        else:
+            return False
+    else:
+        return False
