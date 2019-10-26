@@ -1,5 +1,5 @@
 from django.shortcuts import render
-# from app1.forms import UserForm,UserProfileInfoForm
+from app1.forms import UserForm,UserProfileInfoForm,UpdateProfileForm
 from django.contrib.auth import authenticate,login,logout
 from django.urls import reverse
 from django.http import HttpResponseRedirect, HttpResponse
@@ -9,6 +9,7 @@ from django.contrib.auth.models import User
 
 from app1.forms import TransactionForm
 from django.utils import timezone
+from django.contrib.auth.hashers import check_password
 # Create your views here.
 
 def index(request):
@@ -173,7 +174,7 @@ def user_profile(request):
 	if(request.method=='POST'):
 
 		form=UpdateProfileForm(request.POST)
-		is_click=True
+		is_clicked=True
 		if(form.is_valid()):
 			print("form is valid")
 			new_name=form.cleaned_data['name']
@@ -187,12 +188,12 @@ def user_profile(request):
 				if(new_password==conf_password):
 					is_update=True
 					new_user=request.user
-					new_user_profile=UserProfileInfo.filter(user=request.user)[0]
+					new_user_profile=UserProfileInfo.objects.filter(user=request.user)[0]
 					new_user.set_password(new_password)
 					new_user_profile.name=new_name
 					new_user.save()
 					new_user_profile.save()
-				
+				print(is_update)
 				return render(request,'app1/profile.html',{'is_update':is_update,'form':form})
 
 			return render(request,'app1/profile.html',{'is_clicked':is_clicked,'form':form})
@@ -202,7 +203,6 @@ def user_profile(request):
 	else:
 		form=UpdateProfileForm()
 		return render(request,'app1/profile.html',{'form':form})
-
 
 
 
