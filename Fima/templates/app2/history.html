@@ -29,17 +29,18 @@
                 </thead>
                 {%  for t in his_record %}
                         <tr>
-                              <td>{{ t.user_id2.id }}</td>
+                             
 
                     {% if  t|check_for_history_of_transaction:curr_user %}    
+                                <td>{{ t.user_id2 }}</td>
                         {% if t|find_trans:curr_user %}
-                                <td style='color:rgb(255, 115, 0)'>{{t.amount}}</td>
+                                <td style='color:rgb(255, 115, 0)'>{{t.Amount}}</td>
                         {% else %}
-                                <td style = 'color:rgb(0, 255, 7)'>{{t.amount}}</td>
+                                <td style = 'color:rgb(0, 255, 7)'>{{t.Amount}}</td>
                         {%endif%}
 
-                                <td>{{t.tdate }}</td>
-                                <td>{{t.desc}}</td>
+                                <td>{{t.date }}</td>
+                                <td>{{t.Desc}}</td>
                             </tr>
                     {%endif%}
                 {% endfor %}

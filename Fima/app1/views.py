@@ -4,13 +4,18 @@ from django.contrib.auth import authenticate,login,logout
 from django.urls import reverse
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
-from app1.models import CurrentTransaction,Friends,UserProfileInfo
+from app1.models import CurrentTransaction,Friends,UserProfileInfo,OldNotification,NewNotification
 from django.contrib.auth.models import User
 
 from app1.forms import TransactionForm
 from django.utils import timezone
 from django.contrib.auth.hashers import check_password
+import copy
+from datetime import date
+
 # Create your views here.
+
+is_check_notification=False
 
 def index(request):
 	return render(request,'app1/index.html')
@@ -21,6 +26,10 @@ def special(request):
 
 @login_required
 def user_logout(request):
+	global is_check_notofication
+	print("is_check_notification=",is_check_notification)
+	if(is_check_notification is True):
+		move_notification(request.user)
 	logout(request)
 	return HttpResponseRedirect(reverse('index'))
 
@@ -38,7 +47,7 @@ def register(request):
 			profile=profile_form.save(commit=False)
 			profile.user=user
 			profile.save()
-			regitered=True
+			registered=True
 
 		else:
 			print(user_form.errors,profile_form.errors)
@@ -51,6 +60,8 @@ def register(request):
 						   'registered':registered})
 
 def user_login(request):
+	global is_check_notofication
+	is_check_notofication=False
 	if(request.method=="POST"):
 		username=request.POST.get('username')
 		password=request.POST.get('password')
@@ -88,13 +99,17 @@ def user_search(request):
 			f2.user_id2=User.objects.get(id=request.user.id)
 			f2.user_id1=User.objects.get(id=add_friend.id)
 			f2.save()
-			return HttpResponse('Friend Has been Added Succesfully')
+			message1 =request.user.email+" has added you as friend on "+str(date.today())
+			message_curr="You Have added " + add_friend.email + " as your friend on " + str(date.today())
+			add_notification(add_friend,message1)
+			add_notification(request.user,message_curr)
+			return render(request, 'app1/search.html',{'success':True} )
 		elif(query is not None):
 			is_exist=False
 			result=User.objects.filter(email=query)
 			if(result.exists() and result[0].username!=request.user.username):
 				# print(request.user.username)
-				is_friend=False;
+				is_friend=False
 				is_friend_query=Friends.objects.filter(user_id1=request.user.id,
 					user_id2=result[0].id)
 				if(is_friend_query.exists()):
@@ -119,7 +134,7 @@ def user_search(request):
 def make_transaction(request):
 	if(request.method=='POST'):
 		form=TransactionForm(request.POST)
-		is_click=True;
+		is_click=True
 		if(form.is_valid()):
 			email=form.cleaned_data['Email']
 			action=form.cleaned_data['Action']
@@ -141,6 +156,11 @@ def make_transaction(request):
 						new_transaction.borrowed=UserProfileInfo.objects.filter(user=
 							to_friend[0].user_id2)[0].name
 						
+						message_curr ="You Have Lent Rs"+str(amount)+" to "+to_friend[0].user_id2.email+" on "+str(date.today())
+						message1="You Have Borrowed Rs"+str(amount)+" from "+request.user.email +" on "+str(date.today())
+						add_notification(to_friend[0].user_id2,message1)
+						add_notification(request.user,message_curr)
+						
 					else:
 						new_transaction.user_id2=request.user
 						new_transaction.user_id1=User.objects.get(id=to_friend[0].user_id2.id)
@@ -148,6 +168,11 @@ def make_transaction(request):
 							request.user)[0].name
 						new_transaction.lent=UserProfileInfo.objects.filter(user=
 							to_friend[0].user_id2)[0].name
+
+						message1 ="You Have Lent Rs"+str(amount)+" to "+request.user.email+" on "+str(date.today())
+						message_curr="You Have Borrowed Rs"+str(amount)+" from "+to_friend[0].user_id2.email+" on "+str(date.today())
+						add_notification(to_friend[0].user_id2,message1)
+						add_notification(request.user,message_curr)
 
 					new_transaction.amount=amount
 					new_transaction.desc=desc
@@ -220,6 +245,36 @@ def user_profile(request):
 	else:
 		form=UpdateProfileForm()
 		return render(request,'app1/profile.html',{'form':form})
+
+
+
+
+@login_required
+def show_notification(request):
+	global is_check_notification
+	is_check_notification=True
+	old_not=copy.deepcopy(OldNotification.objects.filter(user_id=request.user))
+	new_not=copy.deepcopy(NewNotification.objects.filter(user_id=request.user))
+	return render(request,'app1/notification.html',{'old_not':old_not,'new_not':new_not})
+
+
+
+
+def add_notification(user,message):
+	new_notification=NewNotification()
+	new_notification.user_id=user
+	new_notification.desc=message
+	new_notification.save()
+
+def move_notification(user):
+	all_obj=NewNotification.objects.filter(user_id=user)
+	for obj in all_obj:
+		old_obj=OldNotification()
+		old_obj.user_id=obj.user_id	
+		old_obj.desc=obj.desc
+		old_obj.date=obj.date
+		old_obj.save()
+	NewNotification.objects.filter(user_id=user).delete()
 
 
 

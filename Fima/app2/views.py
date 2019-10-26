@@ -1,8 +1,11 @@
 from django.shortcuts import render
 from app1.models import CurrentTransaction,UserProfileInfo,TransactionHistory,Friends
+from app1.views import add_notification
 from collections import defaultdict
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
+from datetime import date
+
 # Create your views here.
 
 passed_email = ""
@@ -41,6 +44,7 @@ def settle_trans(request):
                     date= trans.tdate , Amount = trans.amount , lent = trans.lent , borrowed = trans.lent , 
                     Desc = trans.desc)[0]
                     his.save()
+                    print(trans.desc)
                     req_email = find_required_email(passed_email)
                     CurrentTransaction.objects.filter( user_id1 = request.user , user_id2 = req_email  ).delete()
 
@@ -52,6 +56,14 @@ def settle_trans(request):
                     his.save()
                     req_email = find_required_email(passed_email)
                     CurrentTransaction.objects.filter( user_id1 = req_email , user_id2 =  request.user  ).delete()
+    # adding notifications
+    message1 = curr_user_email + " has settled all expenses on " + str(date.today())
+    message2 = "you have settled tranctions with " + passed_email + " on " + str(date.today())
+    required_e = User.objects.filter(email = passed_email)[0]
+
+    add_notification(request.user,message2)
+    add_notification(required_e,message1)
+
     return render(request,'app2/all_trans.html')    
 
 
@@ -130,9 +142,9 @@ def home(request):
     except:
         None
     # DISPLAY USERNAME ISTEAD OF EMAIL
-    for key in friends_name:
-        if friends_name[ key ] == 'none' :
-            friends_name[ keys ] = users.name
+    for users in all_user:
+        if friends_name[ str(users.user) ] == 'none'  :
+            friends_name[ str(users.user) ] = users.name
 
     try:
         friends_name.pop(curr_user_email) # idk how current user was also getting added to the dict

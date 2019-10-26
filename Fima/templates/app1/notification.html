@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+
+<html>
+  <head>
+    <title>Notifications</title>
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <!-- remove this for good font -->
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Audiowide' rel='stylesheet' type='text/css'>
+
+    <!-- remove this for good font -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link rel = 'stylesheet' href ="{% static "css/home_css.css" %}"/> 
+    <script>
+          ('.toast').toast('show');
+    </script>
+  </head>
+  <body style='background-image: linear-gradient(white 10%, #ffdcc2 , #b7ffb7   ) ; '>
+
+      {% block foo %}
+      {% include "app2/main_index.html" %}
+     {% endblock %}
+
+     <div class="container">
+        <div class="jumbotron" style='background-image: linear-gradient( white,#ffdcc2 , #b7ffb7  ) ; '>
+
+  
+            <h1 style='color:rgb(75, 68, 68)'>Notifications</h1>
+
+          <ul class="list-group">
+              {% for noti in new_not %}
+                  <li class="list-group-item" style='background-color: rgb(141, 212, 141);  font-weight:bold; margin-top: 5px; color: black;'>{{noti.desc}}</li>
+                  {% empty %}
+                  <p>No New Notification</p>
+              {% endfor %}
+
+              {% for noti in old_not %}
+                  <li class="list-group-item"  style='background-color:rgb(255, 212, 176); font-weight:bold;  margin-top: 5px; color: black;' >{{noti.desc}}</li>
+                  {% empty %}
+                  <p>No Old Notification</p>
+               {% endfor %}
+
+            </ul>
+        
+        </div>
+      </div>
+
+
+
+      
+      <!-- test -->
+      <div class='tabless'>
+
+      </div>
+      <!-- test -->
+      
+  </body>
+</html>
+
+

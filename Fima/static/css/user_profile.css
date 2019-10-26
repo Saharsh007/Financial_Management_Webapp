@@ -1,0 +1,69 @@
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    max-width: 300px;
+    margin: auto;
+    text-align: center;
+    font-family: arial;
+  }
+  
+  .titlee {
+    color: black;
+    font-size: 18px;
+    font-family: Amatic SC;
+    font-weight:bold;
+
+  }
+
+  .some_text {
+    color:black;
+    font-family: Advent Pro;
+    font-weight:bold;
+}
+
+  
+  .edit_profile {
+    border: none;
+    outline: 0;
+    display: inline-block;
+    padding: 8px;
+    color: white;
+    background-color: #000;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+    font-size: 18px;
+  }
+
+
+.main_heading{
+    color:black;
+    margin-left:470px;
+    margin-top: 100px;
+    font-family: Advent Pro;
+    font-size: 50px;
+  }
+
+  .initial_form{
+    color:black;
+    margin-left:350px;
+    margin-top: 10px;
+    font-family: Advent Pro;
+    font-size: 40px;
+  }
+
+  .result_out{
+   margin-left: 470px;
+   margin-top: 10px; 
+   font-family: Advent Pro;
+   font-size: 40px;
+
+
+  }
+.normal_text{
+  margin-left: 350px;
+  margin-top: 10px; 
+  font-family: Advent Pro;
+  font-size: 40px;
+  color:rgb(97, 255, 97);
+   font-weight: bold;
+}

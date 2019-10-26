@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+import datetime
 # Create your models here.
 
 User._meta.get_field('email')._unique = True
@@ -34,6 +35,16 @@ class TransactionHistory(models.Model):
 	lent=models.CharField(max_length=30)
 	borrowed=models.CharField(max_length=30)
 	Desc=models.CharField(max_length=100)
+
+class OldNotification(models.Model):
+	user_id=models.ForeignKey(User,on_delete=models.CASCADE)
+	desc=models.CharField(max_length=100)
+	date=models.DateField()
+
+class NewNotification(models.Model):
+	user_id=models.ForeignKey(User,on_delete=models.CASCADE)
+	desc=models.CharField(max_length=100)
+	date=models.DateField(default=datetime.date.today)
 
 
 #yes

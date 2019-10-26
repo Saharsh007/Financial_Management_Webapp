@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 {% load staticfiles %}
 {% load my_extra %}
 
@@ -27,21 +28,21 @@
 
   <!-- testend -->
 
-
-    {% block foo %}
-     {% include "app2/main_index.html" %}
-    {% endblock %}
+  {% block foo %}
+  {% include "app2/main_index.html" %}
+ {% endblock %}
 
 <!-- partial:index.partial.html -->
  
   <!-- dashboard -->
 
   <!-- dashboard -->
+
 <div class="pricingTable">
   <h2 class="pricingTable-title">FINANCIAL MANAGEMENT</h2>
   <h3 class="pricingTable-subtitle">Your Finances</h3>
   
-  {% if names|checksize %}
+  {% if amount|checksize %}
 
   <ul class="pricingTable-firstTable">
         {%  for email in amount %}

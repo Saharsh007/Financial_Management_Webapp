@@ -11,4 +11,5 @@ urlpatterns = [
     path('transaction',views.make_transaction,name='transaction'),
     path('profile',views.user_profile,name='profile'),
     path('viewprofile',views.user_profile_view,name='viewprofile'),
+    path('notification',views.show_notification,name='notification')
 ]

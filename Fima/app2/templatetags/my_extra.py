@@ -15,7 +15,7 @@ def check_pos(dictionary,key):
     """
     This returns the 1 if value is poistive else 0
     """
-    if dictionary[key] > 0:
+    if dictionary[key] >= 0:
         return 1
     else:
         return 0
