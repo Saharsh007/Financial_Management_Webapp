@@ -45,7 +45,7 @@ def settle_trans(request):
                     Desc = trans.desc)[0]  
                     his.save()
                     CurrentTransaction.objects.filter(user_id1 = passed_email , user_id2 = curr_user_email).delete()
-
+        
 
 
 

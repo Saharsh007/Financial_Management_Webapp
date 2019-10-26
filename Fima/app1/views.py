@@ -169,6 +169,23 @@ def make_transaction(request):
 		return render(request,'app1/transaction.html',{'form':form})
 
 
+
+
+
+
+
+
+@login_required
+def user_profile_show(request):
+	user_info=UserProfileInfo.objects.filter(user=request.user)[0]
+	return render(request,"app1/show_profile.html",{"user":request.user,"user_info":user_info})
+
+
+
+
+
+
+
 @login_required
 def user_profile(request):
 	if(request.method=='POST'):
