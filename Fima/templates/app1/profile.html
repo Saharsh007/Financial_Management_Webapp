@@ -1,0 +1,21 @@
+{% extends 'app1/base.html' %}
+{% block body_block %}
+  <div class="container">
+    <div class="jumbotron">
+      <h1>Update Your Profile  Here :</h1>
+<form method="post">
+          {% csrf_token %}
+          {{form.as_p}}  
+          <input type="submit" name="submit" value="Update Profile">        
+</form>
+
+{% if is_update is True %}
+	<h3>Your Profile has been Updated Succesfully</h3>
+{% elif is_update is False %}
+	<h3>Confirm Password Does Not Match</h3>
+{% elif is_clicked %}
+	<h3>You have Entered InCorrect Password</h3>
+{% endif %}
+</div>  
+  </div>
+{% endblock %}

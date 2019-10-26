@@ -15,13 +15,13 @@ class UserProfileInfoForm(forms.ModelForm):
          fields = ('name','gender','dob')
 
 class TransactionForm(forms.Form):
-	Email=forms.EmailField(label='Email',max_length=50)
-	Amount=forms.IntegerField(label='Amount')
+	Email=forms.EmailField(label='Email',max_length=50, widget=forms.TextInput( attrs = {'placeholder':'user@gmail.com' } ) ) 
+	Amount=forms.IntegerField(label='Amount' , widget=forms.TextInput( attrs = {'placeholder':'ex:100' } ) )
 	Action=forms.ChoiceField(choices=[('Lent','Lent'),('Borrowed','Borrowed')])
-	Desc=forms.CharField(label='Description',max_length=20)
+	Desc=forms.CharField(label='Description',max_length=20, widget=forms.TextInput( attrs = {'placeholder':'ex:chocolate' } ) )
 
 class UpdateProfileForm(forms.Form):
-	name=forms.CharField(label='New Name',max_length=50)
-	old_password=forms.CharField(label='Old password',widget=forms.PasswordInput)
+	name=forms.CharField(label='New Name',max_length=50 , widget=forms.TextInput( attrs = {'placeholder':'your new name' } ) )
+	old_password=forms.CharField(label='Old password',widget=forms.PasswordInput )
 	new_password=forms.CharField(label='New password',widget=forms.PasswordInput)
 	conf_password=forms.CharField(label='Confirm password',widget=forms.PasswordInput)

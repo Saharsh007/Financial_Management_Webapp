@@ -152,7 +152,7 @@ def make_transaction(request):
 					new_transaction.amount=amount
 					new_transaction.desc=desc
 					new_transaction.tdate=timezone.now()
-					new_transaction.save();
+					new_transaction.save()
 					return render(request,'app1/transaction.html',{'to_friend':to_friend,'form':form})
 
 				else:

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+{% load my_extra %}
+
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>HOME</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+  <!-- remove this for good font -->
+
+  <link rel="stylesheet" href="{% static "css/main.css" %}">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+  <!-- remove this for good font -->
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+
+  <link rel = 'stylesheet' href ="{% static "css/home_css.css" %}"/> 
+
+  <style>
+
+    .pricingTable-firstTable_table:nth-of-type(n):before {
+      content: 'Most Popular';
+      position: absolute;
+      color: white;
+      display: block;
+      background-color: #3bbdee;
+      text-align: center;
+      right: 15px;
+      top: -25px;
+      height: 65px;
+      width: 65px;
+      border-radius: 50%;
+      box-sizing: border-box;
+      font-size: 0.5em;
+      padding-top: 22px;
+      text-transform: uppercase;
+      letter-spacing: 0.13em;
+      transition: all 0.5s ease;
+
+    }
+    </style>
+
+</head>
+<body>
+
+  <!-- test -->
+
+<!-- testend -->
+
+  <!-- navbar -->
+  <nav class="navbar navbar-default navbar-static-top" >
+      <div class="container">
+        <ul class="nav navbar-nav" >
+
+          <li><a  class="navbar-brand" href="{% url 'index' %}">
+              <img class='navimg' src="{% static "img1.jpg" %}">
+            </a></li>
+
+          <li><a class="navbar-brand" href="{% url 'app2:home' %}">Home</a></li>
+
+          <!-- {# When user is logined#} -->
+          {% if user.is_authenticated %}
+
+          <li><a class="navbar-link" href="{% url 'app1:search' %}">Add Friend</a></li>
+          <li><a class="navbar-link" href="{% url 'app2:history' %}">Transaction History</a></li>
+          <li><a class="navbar-link" href="{% url 'app1:transaction' %}">Add Transaction</a></li>
+          <li><a class="navbar-link" href="{% url 'app1:viewprofile' %}">{{request.user.get_username}}</a></li>
+          <li><a class="navbar-link" href="{% url 'app1:logout' %}">Logout</a></li>
+            <!-- if not logined  -->
+            {% else %}
+          <li><a class="navbar-link" href="{% url 'app1:register' %}">Register</a></li>
+          <li><a class="navbar-link" href="{% url 'app1:login' %}">Login</a></li>
+
+          {% endif %}
+        </ul>
+      </div>
+    </nav>
+    <!-- navbar end -->
+
+
+</body>
+</html>

@@ -68,9 +68,9 @@ def check_for_this_user_transaction(trans,emails):
 
 
 
-@register.filter(name='checK_for_history_of_transaction')
+@register.filter(name='check_for_history_of_transaction')
 
-def checK_for_history_of_transaction(trans,curr_user):
+def check_for_history_of_transaction(trans,curr_user):
     """
     This returns if the  transactions which has user1 as curr_user
     """
@@ -81,3 +81,28 @@ def checK_for_history_of_transaction(trans,curr_user):
     else:
         return False
 
+
+
+@register.filter(name='get_number_of__new_notifications')
+
+def get_number_of__new_notifications(a_string):
+    """
+    This returns total number of new notifications
+    """
+    current_user = user
+    curr_user_email = str( current_user.get_username() ) #got current user
+
+
+
+@register.filter(name='checksize')
+
+def checksize(a_dict):
+    """
+    checks if size of dict is zero
+    """
+    for key,value in a_dict.items():
+        print(key,value)
+    if len(a_dict)  > 0:
+        return True
+    else:
+        return False

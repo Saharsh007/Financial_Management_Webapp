@@ -8,28 +8,10 @@
 </head>
   <body>
     <!-- {% debug %} -->
-    <!-- navbar -->
-    <nav class="navbar navbar-default navbar-static-top">
-      <div class="container">
-        <ul class="nav navbar-nav">
-<!-- {# Django Home Link / Admin Link / Register Link#} -->
-          <li><a class="navbar-brand" href="{% url 'index' %}">DJANGO</a></li>
-          <li><a class="navbar-link" href="{% url 'admin:index' %}">Admin</a></li>
-          <li><a class="navbar-link" href="{% url 'app2:home' %}">Home</a></li>
-          <li><a class="navbar-link" href="{% url 'app1:register' %}">Register</a></li>
-          <!-- {# Some logic on what to display for last item#} -->
-          {% if user.is_authenticated %}
-          <li><a class="navbar-link" href="{% url 'app1:transaction' %}">Add Transaction</a></li>
-
-          <li><a class="navbar-link" href="#">{{request.user.get_username}}</a></li>
-
-            <li><a href="{% url 'app1:logout' %}">Logout</a></li>
-          {% else %}
-            <li><a class="navbar-link" href="{% url 'app1:login' %}">Login</a></li>
-          {% endif %}
-        </ul>
-      </div>
-    </nav>
+     <!-- navbar -->
+  {% block foo %}
+  {% include "app2/main_index.html" %}
+ {% endblock %}
     <!-- navbar end -->
     
      <div class="container">
