@@ -17,8 +17,8 @@ class CurrentTransaction(models.Model):
 
 	tdate=models.DateTimeField()
 	amount=models.IntegerField()
-	lent=models.CharField(max_length=20)
-	borrowed=models.CharField(max_length=20)
+	lent=models.CharField(max_length=30)
+	borrowed=models.CharField(max_length=30)
 	desc=models.CharField(max_length=100)
 
 class Friends(models.Model):
@@ -26,6 +26,14 @@ class Friends(models.Model):
 	user_id2=models.ForeignKey(User,on_delete=models.CASCADE,related_name='%(class)s_related2')
 	class Meta:
 		unique_together = ['user_id1', 'user_id2']
+
+class TransactionHistory(models.Model):
+	user_id=models.ForeignKey(User,on_delete=models.CASCADE)
+	date=models.DateField()
+	Amount=models.IntegerField()
+	lent=models.CharField(max_length=30)
+	borrowed=models.CharField(max_length=30)
+	Desc=models.CharField(max_length=100)
 
 
 
