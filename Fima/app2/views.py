@@ -11,10 +11,10 @@ passed_email = ""
 def history(request):
     current_user = request.user
     curr_user_email = str( current_user.get_username() ) #got current user
-    his_record = TransactionHistory.object.order_by('date')
+    his_record = TransactionHistory.objects.order_by('date')
     
     dict_to_pass = {'his_record':his_record , 'curr_user':curr_user_email}
-    return render(request,'app2/histroy.html',dict_to_pass)    
+    return render(request,'app2/history.html',dict_to_pass)    
 
 
 
@@ -45,6 +45,7 @@ def settle_trans(request):
                     Desc = trans.desc)[0]  
                     his.save()
                     CurrentTransaction.objects.filter(user_id1 = passed_email , user_id2 = curr_user_email).delete()
+        return render(request,'app2/all_trans.html')    
 
 
 
@@ -108,8 +109,10 @@ def home(request):
         if friends_name[ str(users.user) ] == 'none':
             friends_name[ str(users.user) ] = users.name
 
-    friends_name.pop(curr_user_email) # idk how current user was also getting added to the dict
-    
+    try:
+        friends_name.pop(curr_user_email) # idk how current user was also getting added to the dict
+    except:
+        None
     # for key,_ in friends_name.items():
     #     print(friends_name[key],friends_amount[key])
     

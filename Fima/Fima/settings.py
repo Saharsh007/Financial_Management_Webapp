@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'Fima.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME':'fimadb',
+        'NAME':'FIMADB',
         'USER':'root',
         'PASSWORD':'1708',
         'HOST':'localhost',

@@ -14,7 +14,6 @@ class UserProfileInfo(models.Model):
 class CurrentTransaction(models.Model):
 	user_id1=models.ForeignKey(User,on_delete=models.CASCADE,related_name='%(class)s_related1')
 	user_id2=models.ForeignKey(User,on_delete=models.CASCADE,related_name='%(class)s_related2')
-
 	tdate=models.DateField()
 	amount=models.IntegerField()
 	lent=models.CharField(max_length=30)
@@ -28,7 +27,8 @@ class Friends(models.Model):
 		unique_together = ['user_id1', 'user_id2']
 
 class TransactionHistory(models.Model):
-	user_id=models.ForeignKey(User,on_delete=models.CASCADE)
+	user_id1=models.ForeignKey(User,on_delete=models.CASCADE,related_name='%(class)s_related1')
+	user_id2=models.ForeignKey(User,on_delete=models.CASCADE,related_name='%(class)s_related2')
 	date=models.DateField()
 	Amount=models.IntegerField()
 	lent=models.CharField(max_length=30)
@@ -36,7 +36,7 @@ class TransactionHistory(models.Model):
 	Desc=models.CharField(max_length=100)
 
 
-
+#yes
 
 
 

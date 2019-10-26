@@ -45,14 +45,14 @@
                     <th>date : </th>
                     <th>desc : </th>
                 </thead>
-                <td>{{t.user_id2 }}</td>
-                {%  for t in trans_record %}
+                {%  for t in his_record %}
                         <tr>
+                              <td>{{ t.user_id2.id }}</td>
+
                     {% if  t|checK_for_history_of_transaction:curr_user %}    
                         {% if t|find_trans:curr_user %}
                                 <td style='color:rgb(255, 115, 0)'>{{t.amount}}</td>
                         {% else %}
-                            <tr>
                                 <td style = 'color:rgb(0, 255, 7)'>{{t.amount}}</td>
                         {%endif%}
 

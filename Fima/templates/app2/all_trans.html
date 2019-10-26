@@ -66,16 +66,22 @@
         
          </div>
 
-                    
-          <!-- test -->
-          <div>
-              <form action="{% url 'app2:settle_trans' %}" method ="POST">
-                  {%csrf_token%}
-                  <input type ="hidden" name = "friend_id" value="{{required_email}}" />
-                  <button  class="pricingTable-firstTable_table__getstart"  type="submit" >SETTLE UP</button>
-              </form>
-          </div>  
-          <!-- testend -->
+          {% if required_email %}     
+            <!-- test -->
+            <div>
+                <form action="{% url 'app2:settle_trans' %}" method ="POST">
+                    {%csrf_token%}
+                    <input type ="hidden" name = "friend_id" value="{{required_email}}" />
+                    <button  class="pricingTable-firstTable_table__getstart"  type="submit" >SETTLE UP</button>
+                </form>
+            </div>  
+            <!-- testend -->
+          {% else %}
+            <div>
+              <h1>NO TRANSACTION TO SHOW</h1>
+            </div>
+          {%endif%}
+            
 
 </body>
 </html>

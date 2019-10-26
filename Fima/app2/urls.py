@@ -8,5 +8,6 @@ urlpatterns = [
     path('home',views.home,name='home'),
     path('all_trans',views.all_trans,name='all_trans'),
     path('history',views.history,name='history'),
+    path('history',views.settle_trans,name='settle_trans'),
 
 ]
