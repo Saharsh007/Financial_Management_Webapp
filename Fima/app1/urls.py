@@ -8,5 +8,7 @@ urlpatterns = [
     path('special',views.special,name='special'),
     path('logout',views.user_logout,name='logout'),
     path('search',views.user_search,name='search'),
-    path('transaction',views.make_transaction,name='transaction')
+    path('transaction',views.make_transaction,name='transaction'),
+    path('profile',views.user_profile,name='profile'),
+    path('viewprofile',views.user_profile_view,name='viewprofile'),
 ]
