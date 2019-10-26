@@ -37,16 +37,18 @@
 
 
     <div class = "djangotwo"> 
-            {% if trans_record %}
+            {% if his_record %}
             <table>
                 <thead>
+                    <th>To : </th>
                     <th>amount : </th>
                     <th>date : </th>
                     <th>desc : </th>
                 </thead>
+                <td>{{t.user_id2 }}</td>
                 {%  for t in trans_record %}
                         <tr>
-                    {% if  t|check_for_this_user_transaction:combined_email %}    
+                    {% if  t|checK_for_history_of_transaction:curr_user %}    
                         {% if t|find_trans:curr_user %}
                                 <td style='color:rgb(255, 115, 0)'>{{t.amount}}</td>
                         {% else %}
@@ -65,17 +67,6 @@
             {%endif%}
         
          </div>
-
-                    
-          <!-- test -->
-          <div>
-              <form action="{% url 'app2:settle_trans' %}" method ="POST">
-                  {%csrf_token%}
-                  <input type ="hidden" name = "friend_id" value="{{required_email}}" />
-                  <button  class="pricingTable-firstTable_table__getstart"  type="submit" >SETTLE UP</button>
-              </form>
-          </div>  
-          <!-- testend -->
 
 </body>
 </html>

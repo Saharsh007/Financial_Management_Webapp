@@ -15,7 +15,7 @@ class CurrentTransaction(models.Model):
 	user_id1=models.ForeignKey(User,on_delete=models.CASCADE,related_name='%(class)s_related1')
 	user_id2=models.ForeignKey(User,on_delete=models.CASCADE,related_name='%(class)s_related2')
 
-	tdate=models.DateTimeField()
+	tdate=models.DateField()
 	amount=models.IntegerField()
 	lent=models.CharField(max_length=30)
 	borrowed=models.CharField(max_length=30)
