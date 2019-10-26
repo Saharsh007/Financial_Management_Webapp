@@ -168,5 +168,41 @@ def make_transaction(request):
 		return render(request,'app1/transaction.html',{'form':form})
 
 
+@login_required
+def user_profile(request):
+	if(request.method=='POST'):
+
+		form=UpdateProfileForm(request.POST)
+		is_click=True
+		if(form.is_valid()):
+			print("form is valid")
+			new_name=form.cleaned_data['name']
+			old_password=form.cleaned_data['old_password']
+		
+			if(check_password(old_password,request.user.password)):
+				print("Check Password Success")
+				new_password=form.cleaned_data['new_password']
+				conf_password=form.cleaned_data['conf_password']
+				is_update=False
+				if(new_password==conf_password):
+					is_update=True
+					new_user=request.user
+					new_user_profile=UserProfileInfo.filter(user=request.user)[0]
+					new_user.set_password(new_password)
+					new_user_profile.name=new_name
+					new_user.save()
+					new_user_profile.save()
+				
+				return render(request,'app1/profile.html',{'is_update':is_update,'form':form})
+
+			return render(request,'app1/profile.html',{'is_clicked':is_clicked,'form':form})
+		
+		else:
+			ValidationError(_('Invalid value'), code='invalid')
+	else:
+		form=UpdateProfileForm()
+		return render(request,'app1/profile.html',{'form':form})
+
+
 
 
