@@ -65,3 +65,19 @@ def check_for_this_user_transaction(trans,emails):
             return False
     else:
         return False
+
+
+
+@register.filter(name='checK_for_history_of_transaction')
+
+def checK_for_history_of_transaction(trans,curr_user):
+    """
+    This returns if the  transactions which has user1 as curr_user
+    """
+    if str(trans.user_id1) == curr_user:
+            return True
+    elif str(trans.user_id2) == curr_user:
+            return True
+    else:
+        return False
+

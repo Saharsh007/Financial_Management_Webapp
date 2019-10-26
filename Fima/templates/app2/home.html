@@ -25,6 +25,10 @@
           <li><a class="navbar-link" href="{% url 'app1:register' %}">Register</a></li>
           <!-- {# Some logic on what to display for last item#} -->
           {% if user.is_authenticated %}
+          <li><a class="navbar-link" href="{% url 'app2:histroy' %}">History</a></li>
+
+          <li><a class="navbar-link" href="{% url 'app1:transaction' %}">ADD Transaction</a></li>
+
             <li><a class="navbar-link" href="#">{{request.user.get_username}}</a></li>
             <li><a href="{% url 'app1:logout' %}">Logout</a></li>
           {% else %}

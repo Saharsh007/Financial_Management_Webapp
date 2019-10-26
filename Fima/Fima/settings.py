@@ -82,7 +82,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME':'fimadb',
         'USER':'root',
-        'PASSWORD':'mysql',
+        'PASSWORD':'1708',
         'HOST':'localhost',
         'PORT':'',
     }
