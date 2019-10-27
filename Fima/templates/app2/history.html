@@ -8,7 +8,8 @@
   <title>TRANSACTIONS</title>
   <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel = 'stylesheet' href ="{% static "css/home_css.css" %}"/> 
+<!-- <link rel = 'stylesheet' href ="{% static "css/general.css  " %}"/>  -->
+<link rel = 'stylesheet' href ="{% static "css/tables.css" %}"/> 
 
 </head>
 <body>
@@ -17,30 +18,38 @@
     {% block foo %}
      {% include "app2/main_index.html" %}
     {% endblock %}
+    <div class='shift_it' style='  margin:50px;
+    margin-left: 100px;
+    font-size: 40px;'>All settled transactions are here</div>
 
     <div class = "djangotwo"> 
             {% if his_record %}
-            <table>
-                <thead>
-                    <th>To : </th>
-                    <th>amount : </th>
-                    <th>date : </th>
-                    <th>desc : </th>
+            <table style='margin-left: 100px; width: 80%; font-weight: bold;'>
+                <thead >
+                    <th style='color: rgb(47, 53, 65); font-size: 40px;'>Friend</th>
+                    <th style='color: rgb(47, 53, 65); font-size: 40px;' >Amount</th>
+                    <th style='color: rgb(47, 53, 65); font-size: 40px;' >Status</th>
+                    <th style='color: rgb(47, 53, 65); font-size: 40px;' >Date</th>
+                    <th style='color: rgb(47, 53, 65); font-size: 40px;'>Desc</th>
                 </thead>
                 {%  for t in his_record %}
                         <tr>
                              
 
                     {% if  t|check_for_history_of_transaction:curr_user %}    
-                                <td>{{ t.user_id2 }}</td>
+                                <td style='color: rgb(133, 127, 187); font-size: 30px;'>{{ t.user_id2 }}</td>
                         {% if t|find_trans:curr_user %}
-                                <td style='color:rgb(255, 115, 0)'>{{t.Amount}}</td>
+                                <td style='color:rgb(255, 115, 0); font-size: 30px; '>{{t.Amount}}</td>
+                                <td style='color:rgb(255, 115, 0); font-size: 30px;'>Borrowed</td>
+
                         {% else %}
-                                <td style = 'color:rgb(0, 255, 7)'>{{t.Amount}}</td>
+                                <td style = 'color:rgb(0, 255, 7); font-size: 30px;'>{{t.Amount}}</td>
+                                <td style = 'color:rgb(0, 255, 7); font-size: 30px;'>Lent</td>
+
                         {%endif%}
 
-                                <td>{{t.date }}</td>
-                                <td>{{t.Desc}}</td>
+                                <td style='color: rgb(133, 127, 187); font-size: 20px;'> {{t.date }}</td>
+                                <td style='color: rgb(133, 127, 187); font-size: 20px;' > {{t.Desc}}</td>
                             </tr>
                     {%endif%}
                 {% endfor %}
@@ -50,6 +59,11 @@
             {%endif%}
         
          </div>
+
+         
+
+
+         
 
 </body>
 </html>

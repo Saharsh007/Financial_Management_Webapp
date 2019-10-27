@@ -1,0 +1,44 @@
+table {
+
+    border: 8px solid rgb(120, 151, 200);
+
+    border-collapse: collapse;
+    margin-left:100px;
+    margin-top: 50px;
+    width: 80%;
+    border-spacing: 15px;
+
+  }
+
+th{
+    border: 1px solid black;
+    border-collapse: collapse;
+    font-size: 30px;
+    color:rgb(8, 14, 8);
+    margin-left: 20px;
+}
+
+td{
+    border: 1px solid black;
+    border-collapse: collapse;
+    margin: 10px;
+    font-size: 20px;
+    text-align: center;
+    font-weight: bold;
+    
+    
+
+}
+
+.shift_it{
+    margin:50px;
+    margin-left: 100px;
+}
+
+table tr:nth-child(even) {
+    background-color: #eee;
+  }
+
+  table tr:nth-child(odd) {
+    background-color: #fff;
+   }
