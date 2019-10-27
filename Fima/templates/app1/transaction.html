@@ -20,22 +20,85 @@
     <link rel = 'stylesheet' href ="{% static "css/user_profile.css" %}"/> 
     <link rel = 'stylesheet' href ="{% static "css/home_css.css" %}"/> 
 
-    <script>
-          ('.toast').toast('show');
-    </script>
+     <style>
+        .text_field{
+          font-size:30px;
+          color:rgb(50, 51, 42);
+          font-family: Advent Pro;
+          margin-left: 30px;
+          display:table-cell;
+  
+        }
+        .text_label{
+          font-size:40px;
+          color:rgb(62, 63, 54);
+          margin-bottom: 20px;
+          font-family: Advent Pro;
+          display:table-cell;
+  
+        }
+        .submitbutton{
+          margin-left:350px;
+          width:240px;
+          height:80px;
+          padding-top: 10px;
+          font-family:  Advent Pro;
+          font-size:30px;
+          font-weight: bold;
+        }
+  
+        .main_heading{
+        color:black;
+        margin-left:430px;
+        margin-top: 100px;
+        font-family: Advent Pro;
+        font-size: 50px;
+        }
+        .drop_down_menu{  
+          width: 100px;
+          color:red;
+          margin-left: 30px;
+          position: relative;
+          display: inline-block;
+        }
+        .drop_down_menu-content {
+          display: none;
+          position: absolute;
+          background-color: #f9f9f9;
+          min-width: 160px;
+          box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+          padding: 12px 16px;
+          z-index: 1;
+        }
+        .main_heading{
+      color:black;
+      margin-left:300px;
+      margin-top: 100px;
+      font-family: Advent Pro;
+      font-size: 50px;
+      }
+  
+      </style>
   </head>
-  <body style='background-image: linear-gradient(white 10%, #ffffff , #ffffff   ) ; '>
+  <body style='background-image: linear-gradient(white 10%, #a38f8f   ) ; '>
       {% block foo %}
       {% include "app2/main_index.html" %}
      {% endblock %}
+     <p class='main_heading' >Add Trasaction With {{passed_email}}</p>
 	 <div class="container">
-			<div class="jumbotron">
-        <h1>Add Trasaction With {{passed_email}}</h1>
+			<div class="jumbotron" style='background-image: linear-gradient( #dac0c0 , rgb(255, 255, 255)   ) ; '>
+        
 				<form action="{% url 'app1:transaction' %}" , method='POST'>
 		  
-					{% csrf_token %}
-					{{form.as_p}}
-					<input type="submit" name="add" value="Add Transaction">
+            {% csrf_token %}
+            {% for field in form%}
+            <p style='display: table-row'>
+            <label class="text_label" for='name'>{{field.label}} :</label>
+            <span class="text_label" style='margin-left:px; padding-right:50px; visibility: hidden;'>:</span>
+            {{field}} <br>
+          </p>
+            {%endfor%}
+            <input class='pricingTable-firstTable_table__getstart submitbutton' style='color: rgb(54, 47, 47); ' type="submit" name="add" value="Add Transaction">      
 				</form>
 				{% if to_friend %}
 					<h2>Transaction Successfull</h2>
@@ -44,8 +107,8 @@
 				{% elif is_click %}
 					<h2>This user does not exist</h2>
 				{% endif %}
-			</div>
-		  </div>
+      </div>  
+        </div>
   </body>
 </html>
 

@@ -19,22 +19,61 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     <link rel = 'stylesheet' href ="{% static "css/user_profile.css" %}"/> 
     <link rel = 'stylesheet' href ="{% static "css/home_css.css" %}"/> 
+    <style>
+      .text_field{
+        font-size:30px;
+        color:rgb(50, 51, 42);
+        font-family: Advent Pro;
+        margin-left: 30px;
+        display:table-cell;
 
-    <script>
-          ('.toast').toast('show');
-    </script>
+      }
+      .text_label{
+        font-size:40px;
+        color:rgb(62, 63, 54);
+        margin-bottom: 20px;
+        font-family: Advent Pro;
+        display:table-cell;
+
+      }
+      .submitbutton{
+        margin-left:350px;
+        width:240px;
+        height:80px;
+        padding-top: 10px;
+        font-family:  Advent Pro;
+        font-size:30px;
+        font-weight: bold;
+      }
+
+      .main_heading{
+      color:black;
+      margin-left:430px;
+      margin-top: 100px;
+      font-family: Advent Pro;
+      font-size: 50px;
+      }
+
+    </style>
   </head>
-  <body style='background-image: linear-gradient(white 10%, #ffffff , #ffffff   ) ; '>
+  <body style='background-image: linear-gradient(white 10%, #a38f8f   ) ; '>
       {% block foo %}
       {% include "app2/main_index.html" %}
      {% endblock %}
-     <div class="container">
-        <div class="jumbotron">
-          <h1>Update Your Profile  Here :</h1>
-    <form method="post">
+     <p class='main_heading'>Update Your Profile  Here :</p>
+
+     <div class="container"   >
+        <div class="jumbotron" style='background-image: linear-gradient( #dac0c0 , rgb(255, 255, 255)   ) ; '>
+    <form style='display: table;' method="post">
               {% csrf_token %}
-              {{form.as_p}}  
-              <input type="submit" name="submit" value="Update Profile">        
+              {% for field in form%}
+              <p style='display: table-row'>
+              <label class="text_label" for='name'>{{field.label}} :</label>
+              <span class="text_label" style='margin-left:px;'>:</span>
+              {{field}} <br>
+            </p>
+              {%endfor%}
+              <input class='pricingTable-firstTable_table__getstart submitbutton' style='color: rgb(54, 47, 47); ' type="submit" name="submit" value="Update Profile">        
     </form>
     
     {% if is_update is True %}

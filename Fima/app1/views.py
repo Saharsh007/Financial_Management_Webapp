@@ -137,6 +137,7 @@ passed_email=None
 def make_transaction(request):
 	global passed_email
 	if(request.method=='POST'):
+		print(request.POST)
 		if('show' in request.POST):
 			form=TransactionForm()
 			passed_email = request.POST.get('friend_id')
@@ -149,6 +150,7 @@ def make_transaction(request):
 			is_click=True
 			to_user=User.objects.filter(email=passed_email)
 			if(form.is_valid()):
+				print("Validation Success")
 				action=form.cleaned_data['Action']
 				amount=form.cleaned_data['Amount']
 				desc=form.cleaned_data['Desc']
@@ -157,6 +159,7 @@ def make_transaction(request):
 							user_id2=to_user[0].id)
 					if(to_friend.exists()):
 						new_transaction=CurrentTransaction()
+						print("action="+str(action))
 						print(UserProfileInfo.objects.filter(user_id=
 								to_friend[0].user_id2.id))
 						if(action=='Lent'):
@@ -197,18 +200,15 @@ def make_transaction(request):
 						"passed_email":passed_email}) 
 
 				else:
-					return render(request,'app1/transaction.html',{'is_click':is_click,'form':form,
-					"passed_email":passed_email})
+					print("Validation Failed")
+					return HttpResponse("invalid Form")
 
 			else:
-				ValidationError(_('Invalid value'), code='invalid')
+				return render(request,'app1/transaction.html',{'form':form,"passed_email":passed_email})
 
 	else:
 		form=TransactionForm()
 		return render(request,'app1/transaction.html',{'form':form,"passed_email":passed_email})
-
-
-
 
 
 

@@ -22,6 +22,7 @@
     <link href='https://fonts.googleapis.com/css?family=Audiowide' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Amatic SC' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Advent Pro' rel='stylesheet'>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <script>
           ('.toast').toast('show');
     </script>
@@ -32,36 +33,57 @@
      {% endblock %}
 
      
-      <div class="container">
-          <div class="jumbotron" style='background-color: white;'>
+
             
             {% if user %}                       
-              <div class="card" style='width: 1000px;  margin-left:35%;' >
-                  <img src="{{user_info.profile_pic.url}}" alt="John" style="width:80%; margin-top:40px; height:80%;">
-                  <h1 class="some_text" style='text-transform: capitalize;'>{{ user_info.name }}</h1>
-                  <p  class="some_text" style='font-size:30px;' >{{ user.email }}</p>
-                  <p class="some_text" style='font-size:40px;'> {{ user_info.dob }}</p>
-                  <form action="{% url 'app1:profile' %}">
-                    <input  href='' class="pricingTable-firstTable_table__getstart" type="submit" value="Edit profile" 
-                     style='font-weight:bold; font-size:20px; background-color: rgb(97, 223, 66); color:black; margin-bottom: 20px; width: 80%;font-family:  Advent Pro;
-                    '>
+              
+        <div class='row' style='height:100px;'>
 
-                </form>
-                <form action="{% url 'app1:delete' %}">
-                  <input  href='' class="pricingTable-firstTable_table__getstart" type="submit" value="Delete Account" 
-                   style='font-weight:bold; font-size:20px; background-color: rgb(245, 115, 40); color:black; margin-bottom: 50px; width: 80%;font-family:  Advent Pro;
-                  '>
-
-              </form>
+            <div class='col-sm-6'>
+              <div class="w3-card-4" style='width:500px; margin-left: 100px; margin-bottom: 100px;' >
+                  <img style='width:100%' src="{{user_info.profile_pic.url}}" alt="ProfilePic">
+  
               </div>
+            </div>
+  
+  
+            <div class='col-sm-6'>
+              <div class="w3-card-4" style='width:60%; margin-left: 100px; margin-bottom: 10px; height:300%;' >
+                  <header class="w3-container w3-blue">
+                    <h1>{{ user_info.name }}</h1>
+                  </header>
+              
+                  <div class="w3-container">
+                      <p  class="some_text" style='font-size:30px;' >{{ user.email }}</p>
+                      <p class="some_text" style='font-size:40px;'> {{ user_info.dob }}</p>                
+                    </div>
+              
+                  <footer class="w3-container w3-blue">
+                    <h5>{{user_info.gender}}</h5>
+                    
+                  </footer>
+                </div>
+  
+                <form action="{% url 'app1:profile' %}">
+                    <input  href='' class="pricingTable-firstTable_table__getstart" type="submit" value="Edit profile" 
+                    style='font-weight:bold; font-size:20px; background-color: rgb(98, 245, 40); color:black; margin-bottom: 20px; width: 50%;font-family:  Advent Pro; margin-left: 100px;'
+                    '>
+  
+                </form>
+                
+                <form action="{% url 'app1:delete' %}">
+                    <input  href='' class="pricingTable-firstTable_table__getstart" type="submit" value="Delete Account" 
+                     style='font-weight:bold; font-size:20px; background-color: rgb(245, 115, 40); color:black; margin-bottom: 50px; width: 50%;font-family:  Advent Pro; margin-left: 100px;'>
+  
+                </form>
+  
+  
+              </div>
+  
+          </div>
 
             {% endif %}
 
-
-
-          </div>
-        </div>
-        
 
         
       

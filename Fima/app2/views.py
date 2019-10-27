@@ -33,17 +33,18 @@ def settle_trans(request):
     if request.method == 'POST':
         search_id = request.POST.get('friend_id')
         passed_email = search_id
+        print(passed_email)
         # pass all transactions from CurrentTransaction to TransactionHistory for that specific user
-        print(len(curr_trans))
+        # print(len(curr_trans))
         for trans in curr_trans:
-            print(trans)
+            # print(trans)
             if str(trans.user_id1) == curr_user_email:
                 if str(trans.user_id2) == passed_email:
                     his = TransactionHistory.objects.get_or_create(user_id1 = trans.user_id1 , user_id2 = trans.user_id2 ,
                     date= trans.tdate , Amount = trans.amount , lent = trans.lent , borrowed = trans.lent , 
                     Desc = trans.desc)[0]
                     his.save()
-                    print(trans.desc)
+                    # print(trans.desc)
                     req_email = find_required_email(passed_email)
                     CurrentTransaction.objects.filter( user_id1 = request.user , user_id2 = req_email  ).delete()
 

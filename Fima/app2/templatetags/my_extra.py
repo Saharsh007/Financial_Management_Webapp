@@ -116,8 +116,8 @@ def check_object_size(object,curr_user):
     print(len(object))
     Flag = False
     for t in object:
-        if check_for_this_user_transaction(t,curr_user):
-            flag = True 
+        if check_for_history_of_transaction(t,curr_user) :
+            Flag = True 
     if Flag == True:
         return True
     else:
