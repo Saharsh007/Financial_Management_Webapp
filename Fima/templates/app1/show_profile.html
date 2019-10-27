@@ -36,17 +36,23 @@
           <div class="jumbotron" style='background-color: white;'>
             
             {% if user %}                       
-              <div class="card" style='width: 100%;  margin-left:35%;' >
-                  <img src="{% static 'img3.png' %}" alt="John" style="width:30%">
+              <div class="card" style='width: 1000px;  margin-left:35%;' >
+                  <img src="{{user_info.profile_pic.url}}" alt="John" style="width:80%; margin-top:40px; height:80%;">
                   <h1 class="some_text" style='text-transform: capitalize;'>{{ user_info.name }}</h1>
                   <p  class="some_text" style='font-size:30px;' >{{ user.email }}</p>
                   <p class="some_text" style='font-size:40px;'> {{ user_info.dob }}</p>
                   <form action="{% url 'app1:profile' %}">
                     <input  href='' class="pricingTable-firstTable_table__getstart" type="submit" value="Edit profile" 
-                     style='font-weight:bold; font-size:40px; background-color: rgb(97, 223, 66); color:black; margin-bottom: 50px; width: 80%;font-family:  Advent Pro;
+                     style='font-weight:bold; font-size:20px; background-color: rgb(97, 223, 66); color:black; margin-bottom: 20px; width: 80%;font-family:  Advent Pro;
                     '>
 
                 </form>
+                <form action="{% url 'app1:delete' %}">
+                  <input  href='' class="pricingTable-firstTable_table__getstart" type="submit" value="Delete Account" 
+                   style='font-weight:bold; font-size:20px; background-color: rgb(245, 115, 40); color:black; margin-bottom: 50px; width: 80%;font-family:  Advent Pro;
+                  '>
+
+              </form>
               </div>
 
             {% endif %}

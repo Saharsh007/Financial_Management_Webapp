@@ -106,3 +106,19 @@ def checksize(a_dict):
         return True
     else:
         return False
+
+@register.filter(name='check_object_size')
+
+def check_object_size(object,curr_user):
+    """
+    checks if size of dict is zero
+    """
+    print(len(object))
+    Flag = False
+    for t in object:
+        if check_for_this_user_transaction(t,curr_user):
+            flag = True 
+    if Flag == True:
+        return True
+    else:
+        return False

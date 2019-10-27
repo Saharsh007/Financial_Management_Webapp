@@ -102,7 +102,16 @@
                 <input type ="hidden" name = "friend_id" value="{{email}}" />
                 <button  class="pricingTable-firstTable_table__getstart"  type="submit" >VIEW TRANSACTIONS</button>
             </form>
-            </div>  
+            </div> 
+
+            <div>
+                <form action="{% url 'app1:transaction' %}" method ="POST">
+                    {%csrf_token%}
+                    <input type ="hidden" name = "friend_id" value="{{email}}" />
+                    <input  class="pricingTable-firstTable_table__getstart"  type="submit" name='show' value='ADD TRANSACTIONs'>
+                </form>
+                </div> 
+            
             <!-- testend -->
 
           </li>
@@ -112,7 +121,7 @@
   </div>
 
   {%else%}
-  <p>No TRANSACTIONS records found</p>  
+  <p style='font-size:70px; margin-left:120px; color:rgb(195, 78, 78)'>No TRANSACTIONS records found</p>  
   {%endif%}
    
 

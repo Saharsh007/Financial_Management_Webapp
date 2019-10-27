@@ -15,7 +15,6 @@ from datetime import date
 
 # Create your views here.
 
-is_check_notification=False
 
 def index(request):
 	return render(request,'app1/index.html')
@@ -26,10 +25,6 @@ def special(request):
 
 @login_required
 def user_logout(request):
-	global is_check_notofication
-	print("is_check_notification=",is_check_notification)
-	if(is_check_notification is True):
-		move_notification(request.user)
 	logout(request)
 	return HttpResponseRedirect(reverse('index'))
 
@@ -46,6 +41,14 @@ def register(request):
 			user.save()
 			profile=profile_form.save(commit=False)
 			profile.user=user
+
+			# Check if they provided a profile picture
+			if 'profile_pic' in request.FILES:
+				print('found it')
+				# If yes, then grab it from the POST form reply
+				profile.profile_pic = request.FILES['profile_pic']
+
+            # Now save model
 			profile.save()
 			registered=True
 
@@ -129,69 +132,80 @@ def user_search(request):
 
 
 
-
+passed_email=None
 @login_required
 def make_transaction(request):
+	global passed_email
 	if(request.method=='POST'):
-		form=TransactionForm(request.POST)
-		is_click=True
-		if(form.is_valid()):
-			email=form.cleaned_data['Email']
-			action=form.cleaned_data['Action']
-			amount=form.cleaned_data['Amount']
-			desc=form.cleaned_data['Desc']
-			to_user=User.objects.filter(email=email)
-			if(to_user.exists()):
-				to_friend=Friends.objects.filter(user_id1=request.user.id,
-						user_id2=to_user[0].id)
-				if(to_friend.exists()):
-					new_transaction=CurrentTransaction()
-					print(UserProfileInfo.objects.filter(user_id=
-							to_friend[0].user_id2.id))
-					if(action=='Lent'):
-						new_transaction.user_id1=request.user
-						new_transaction.user_id2=User.objects.get(id=to_friend[0].user_id2.id)
-						new_transaction.lent=UserProfileInfo.objects.filter(user=
-							request.user)[0].name
-						new_transaction.borrowed=UserProfileInfo.objects.filter(user=
-							to_friend[0].user_id2)[0].name
-						
-						message_curr ="You Have Lent Rs"+str(amount)+" to "+to_friend[0].user_id2.email+" on "+str(date.today())
-						message1="You Have Borrowed Rs"+str(amount)+" from "+request.user.email +" on "+str(date.today())
-						add_notification(to_friend[0].user_id2,message1)
-						add_notification(request.user,message_curr)
-						
-					else:
-						new_transaction.user_id2=request.user
-						new_transaction.user_id1=User.objects.get(id=to_friend[0].user_id2.id)
-						new_transaction.borrowed=UserProfileInfo.objects.filter(user=
-							request.user)[0].name
-						new_transaction.lent=UserProfileInfo.objects.filter(user=
-							to_friend[0].user_id2)[0].name
-
-						message1 ="You Have Lent Rs"+str(amount)+" to "+request.user.email+" on "+str(date.today())
-						message_curr="You Have Borrowed Rs"+str(amount)+" from "+to_friend[0].user_id2.email+" on "+str(date.today())
-						add_notification(to_friend[0].user_id2,message1)
-						add_notification(request.user,message_curr)
-
-					new_transaction.amount=amount
-					new_transaction.desc=desc
-					new_transaction.tdate=timezone.now()
-					new_transaction.save()
-					return render(request,'app1/transaction.html',{'to_friend':to_friend,'form':form})
-
-				else:
-					return render(request,'app1/transaction.html',{'to_user':to_user,'form':form}) 
-
-			else:
-				return render(request,'app1/transaction.html',{'is_click':is_click,'form':form})
+		if('show' in request.POST):
+			form=TransactionForm()
+			passed_email = request.POST.get('friend_id')
+			print("Show"+passed_email)
+			return render(request,'app1/transaction.html',{"passed_email":passed_email,'form':form})
 
 		else:
-			ValidationError(_('Invalid value'), code='invalid')
+			print("Add"+passed_email)
+			form=TransactionForm(request.POST)
+			is_click=True
+			to_user=User.objects.filter(email=passed_email)
+			if(form.is_valid()):
+				action=form.cleaned_data['Action']
+				amount=form.cleaned_data['Amount']
+				desc=form.cleaned_data['Desc']
+				if(to_user.exists()):
+					to_friend=Friends.objects.filter(user_id1=request.user.id,
+							user_id2=to_user[0].id)
+					if(to_friend.exists()):
+						new_transaction=CurrentTransaction()
+						print(UserProfileInfo.objects.filter(user_id=
+								to_friend[0].user_id2.id))
+						if(action=='Lent'):
+							new_transaction.user_id1=request.user
+							new_transaction.user_id2=User.objects.get(id=to_friend[0].user_id2.id)
+							new_transaction.lent=UserProfileInfo.objects.filter(user=
+								request.user)[0].name
+							new_transaction.borrowed=UserProfileInfo.objects.filter(user=
+								to_friend[0].user_id2)[0].name
+							
+							message_curr ="You Have Lent Rs"+str(amount)+" to "+to_friend[0].user_id2.email+" on "+str(date.today())
+							message1="You Have Borrowed Rs"+str(amount)+" from "+request.user.email +" on "+str(date.today())
+							add_notification(to_friend[0].user_id2,message1)
+							add_notification(request.user,message_curr)
+							
+						else:
+							new_transaction.user_id2=request.user
+							new_transaction.user_id1=User.objects.get(id=to_friend[0].user_id2.id)
+							new_transaction.borrowed=UserProfileInfo.objects.filter(user=
+								request.user)[0].name
+							new_transaction.lent=UserProfileInfo.objects.filter(user=
+								to_friend[0].user_id2)[0].name
+
+							message1 ="You Have Lent Rs"+str(amount)+" to "+request.user.email+" on "+str(date.today())
+							message_curr="You Have Borrowed Rs"+str(amount)+" from "+to_friend[0].user_id2.email+" on "+str(date.today())
+							add_notification(to_friend[0].user_id2,message1)
+							add_notification(request.user,message_curr)
+
+						new_transaction.amount=amount
+						new_transaction.desc=desc
+						new_transaction.tdate=timezone.now()
+						new_transaction.save()
+						return render(request,'app1/transaction.html',{'to_friend':to_friend,'form':form,
+						"passed_email":passed_email})
+
+					else:
+						return render(request,'app1/transaction.html',{'to_user':to_user,'form':form,
+						"passed_email":passed_email}) 
+
+				else:
+					return render(request,'app1/transaction.html',{'is_click':is_click,'form':form,
+					"passed_email":passed_email})
+
+			else:
+				ValidationError(_('Invalid value'), code='invalid')
 
 	else:
 		form=TransactionForm()
-		return render(request,'app1/transaction.html',{'form':form})
+		return render(request,'app1/transaction.html',{'form':form,"passed_email":passed_email})
 
 
 
@@ -251,14 +265,39 @@ def user_profile(request):
 
 @login_required
 def show_notification(request):
-	global is_check_notification
-	is_check_notification=True
-	old_not=copy.deepcopy(OldNotification.objects.filter(user_id=request.user))
-	new_not=copy.deepcopy(NewNotification.objects.filter(user_id=request.user))
+	old_not=list(OldNotification.objects.filter(user_id=request.user))
+	new_not=list(NewNotification.objects.filter(user_id=request.user))
+	move_notification(request.user)
 	return render(request,'app1/notification.html',{'old_not':old_not,'new_not':new_not})
 
 
 
+@login_required
+def delete_account(request):
+	if(request.method=='POST'):
+		can=False
+		curr_t1=CurrentTransaction.objects.filter(user_id1=request.user)
+		curr_t2=CurrentTransaction.objects.filter(user_id2=request.user)
+		print(curr_t1)
+		print(curr_t2)
+		if(curr_t1.exists() or curr_t2.exists()):
+			return render(request,'app1/delete.html',{"can":can})
+		else:
+			can=True
+			u=User.objects.get(username=request.user.username)
+			u.delete()
+			return render(request,'app1/delete.html',{"can":can})
+	else:
+		return render(request,'app1/delete.html')
+
+
+
+
+
+
+
+def notification_count(user):
+	return str(NewNotification.objects.filter(user_id=user).count())
 
 def add_notification(user,message):
 	new_notification=NewNotification()

@@ -23,7 +23,7 @@
     font-size: 40px;'>All settled transactions are here</div>
 
     <div class = "djangotwo"> 
-            {% if his_record %}
+            {% if his_record|check_object_size:curr_user %}
             <table style='margin-left: 100px; width: 80%; font-weight: bold;'>
                 <thead >
                     <th style='color: rgb(47, 53, 65); font-size: 40px;'>Friend</th>
@@ -55,7 +55,7 @@
                 {% endfor %}
             </table>
             {%else%}
-                <p>No transaction records found</p>
+                <p style='font-size:50px; margin-left:90px; color:rgb(195, 78, 78)'>No transaction records found</p>
             {%endif%}
         
          </div>

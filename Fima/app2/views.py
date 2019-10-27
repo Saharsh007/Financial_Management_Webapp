@@ -1,11 +1,10 @@
 from django.shortcuts import render
 from app1.models import CurrentTransaction,UserProfileInfo,TransactionHistory,Friends
-from app1.views import add_notification
+from app1.views import add_notification,notification_count
 from collections import defaultdict
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
 from datetime import date
-
 # Create your views here.
 
 passed_email = ""
@@ -96,8 +95,10 @@ def all_trans(request):
     # return render(request,'app2/all_trans',trans_record)    
     
 
-def home(request):
-   
+
+
+def home(request):  
+    print("notification count="+notification_count(request.user))
     current_user = request.user
     curr_user_email = str( current_user.get_username() ) #got current user
     all_details = {'pos':0 ,'neg':0  ,'total':0 ,'pos_ratio':0 ,'nag_ratio':0}

@@ -13,10 +13,9 @@ class UserForm(forms.ModelForm):
 class UserProfileInfoForm(forms.ModelForm):
      class Meta():
          model = UserProfileInfo
-         fields = ('name','gender','dob')
+         fields = ('name','gender','dob','profile_pic')
 
 class TransactionForm(forms.Form):
-	Email=forms.EmailField(label='Email',max_length=50)
 	Amount=forms.IntegerField(label='Amount')
 	Action=forms.ChoiceField(choices=[('Lent','Lent'),('Borrowed','Borrowed')])
 	Desc=forms.CharField(label='Description',max_length=20)

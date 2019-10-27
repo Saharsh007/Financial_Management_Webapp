@@ -7,8 +7,10 @@ User._meta.get_field('email')._unique = True
 class UserProfileInfo(models.Model):
 	user = models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True)
 	dob=models.DateField()
-	gender=models.CharField(max_length=10)
+	Categories =(("M","Male"),("F","Female"))
+	gender=models.CharField(max_length=10 , choices=Categories)
 	name=models.CharField(max_length=20,default='DefaultName')
+	profile_pic = models.ImageField(upload_to='app1/profile_pics',blank=True)
 	def __str__(self):
   		return self.user.username
 
