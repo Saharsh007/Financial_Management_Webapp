@@ -21,31 +21,49 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     <link rel = 'stylesheet' href ="{% static "css/user_profile.css" %}"/> 
     <link rel = 'stylesheet' href ="{% static "css/home_css.css" %}"/> 
+    <style>
 
-    <script>
-          ('.toast').toast('show');
-    </script>
+        .submitbutton{
+          margin-left:350px;
+          width:240px;
+          height:80px;
+          padding-top: 10px;
+          font-family:  Advent Pro;
+          font-size:20px;
+          font-weight: bold;
+        }
+  
+        .main_heading{
+        color:black;
+        margin-left:320px;
+        margin-top: 100px;
+        font-family: Advent Pro;
+        font-size: 100px;
+        }
+  
+      </style>
   </head>
   <body style='background-image: linear-gradient(white 10%, #ffffff , #ffffff   ) ; '>
       {% block foo %}
       {% include "app2/main_index.html" %}
      {% endblock %}
 
+     
      <div class="container">
         <div class="jumbotron">
         {% if can %}
-            <h1>Account Deleted SuccesFully</h1>
+            <p class='main_heading' >Account Deleted SuccesFully</p>
         {% elif can is False %}
-            <h1>You Have some unsettled Transaction Remaining , Settle them to Delete Account</h1>
+            <p class='main_heading' >You Have some unsettled Transaction Remaining , Settle them to Delete Account</p>
         {% else %}
-          <h1>Are You Sure , You Want Delete Account !</h1>
+          <p class='main_heading'>Are You Sure , You Want Delete Account !</p>
           {% if user.is_authenticated %}
               <form method='POST'>
                     {%csrf_token%}
-                  <input type="submit" name="" value="Yes , Delete My Account">
+                  <input class='pricingTable-firstTable_table__getstart submitbutton' style='color: rgb(54, 47, 47); background-color: red;' type="submit" name="" value="Yes , Delete My Account">
               </form>
           {% else %}
-              <h2>Register or Login if you'd like to</h2>
+              <p class='main_heading' >Register or Login if you'd like to</p>
           {% endif %}
         {% endif %}
         </div>
@@ -55,8 +73,7 @@
         </div>
         
 
-        
-      
+
   </body>
 </html>
 

@@ -20,30 +20,97 @@
     <link rel = 'stylesheet' href ="{% static "css/user_profile.css" %}"/> 
     <link rel = 'stylesheet' href ="{% static "css/home_css.css" %}"/> 
 
-    <script>
-          ('.toast').toast('show');
-    </script>
+    <style>
+    .main_heading{
+    color:rgb(255, 0, 0);
+    margin-left:80px;
+    margin-top: 100px;
+    font-family: Advent Pro;
+    font-size: 50px;
+  }
+  .text_field{
+        font-size:30px;
+        color:rgb(50, 51, 42);
+        font-family: Advent Pro;
+        margin-left: 30px;
+        display:table-cell;
+
+      }
+      .text_label{
+        font-size:40px;
+        color:rgb(62, 63, 54);
+        margin-bottom: 20px;
+        font-family: Advent Pro;
+        display:table-cell;
+
+      }
+      .submitbutton{
+        margin-left:00px;
+        width:240px;
+        height:80px;
+        padding-top: 10px;
+        font-family:  Advent Pro;
+        font-size:30px;
+        font-weight: bold;
+      }
+
+      .main_heading{
+      color:black;
+      margin-left:430px;
+      margin-top: 100px;
+      font-family: Advent Pro;
+      font-size: 50px;
+      }
+
+  </style>
+
   </head>
-  <body style='background-image: linear-gradient(white 10%, #ffffff , #ffffff   ) ; '>
+  <body style='background-image: linear-gradient(white 10%, #a38f8f   ) ;' >
       {% block foo %}
       {% include "app2/main_index.html" %}
      {% endblock %}
 
-     <div class="container">
-        <div class="jumbotron">
-          <h1>Login here :</h1>
-    <form method="post" action="{% url 'app1:login' %}">
+     <p class='main_heading' style='margin-left: 270px;'>Login here</p>
+
+     <div class="container" style='width: 60%;'>
+        <div class="jumbotron" tyle='background-image: linear-gradient( #dac0c0 , rgb(255, 255, 255)   ) ; '>
+          
+    <form style='display: table;' method="post" action="{% url 'app1:login' %}" >
               {% csrf_token %}
               <!-- {# A more "HTML" way of creating the login form#} -->
-              <label for="username">Username:</label>
-              <input type="text" name="username" placeholder="Username">
-    <label for="password">Password:</label>
-              <input type="password" name="password" placeholder="Password">
-    <input type="submit" name="" value="Login">
+            
+            <p style='display: table-row'>
+              <label  class="text_label" for="username">Username :</label>
+              <span  style='margin-left:px; visibility: hidden;'>:</span>
+
+              <input  class="text_field" type="text" name="username" placeholder="Username">
+            </p>
+            <p style='display: table-row'>
+              <label  class="text_label" for="password">Password :</label>
+              <span  style='margin-left:px; visibility: hidden;'>:</span>
+              <input  class="text_field"  type="password" name="password" placeholder="Password">
+            </p>
+              <input  class='pricingTable-firstTable_table__getstart submitbutton'   style='color: rgb(54, 47, 47);'  type="submit" name="" value="Login">
+            
     </form>
+
+
+
+ 
+
+
+
     </div>
       </div>
-        
+
+      {% if failed_login %}
+      <p class='main_heading'>LOGIN FALIED : INVALID CREDENTIALS</p>
+
+      <audio controls autoplay style='visibility: hidden;'>
+          <source  src="{% static 'sound1.mp3' %}" type="audio/mpeg">
+        </audio>
+
+      {%endif%}
 
         
       

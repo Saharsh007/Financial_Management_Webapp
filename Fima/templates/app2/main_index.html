@@ -43,29 +43,43 @@
       transition: all 0.5s ease;
 
     }
+
+
+  html,body{
+    font-family:Advent Pro;  
+  }
+
+  .noti_img{
+    height:40px ;
+    widows: 40px;
+    position: absolute;
+    right:0;
+    font-size: 30px;
+  }
     
     </style>
 
 </head>
-<body style='font-family:Advent Pro'>
+<body>
+
 
   <!-- test -->
 
 <!-- testend -->
 
   <!-- navbar -->
-  <nav class="navbar navbar-default navbar-static-top" >
+  <nav class="navbar navbar-default navbar-static-top navbar-expand-lg" >
       <div class="container">
         <ul class="nav navbar-nav" >
 
-          <li><a  class="navbar-brand" href="{% url 'index' %}">
-              <img class='navimg' src="{% static "img1.jpg" %}">
+          <li><a  class="navbar-brand" href="{% url 'index' %}" style='width: 200px;'>
+              <img class='navimg' src="{% static "default.png" %}">
             </a></li>
 
-          <li><a class="navbar-brand" href="{% url 'app2:home' %}">Home</a></li>
 
           <!-- {# When user is logined#} -->
           {% if user.is_authenticated %}
+          <li><a class="navbar-brand" href="{% url 'app2:home' %}">Home</a></li>
 
           <li><a class="navbar-link" href="{% url 'app1:search' %}">Add Friend</a></li>
           <li><a class="navbar-link" href="{% url 'app2:history' %}">Transaction History</a></li>
@@ -82,7 +96,22 @@
       </div>
     </nav>
     <!-- navbar end -->
+    <div >
+      <img  class="noti_img" style='margin-right: 35px;' src={% static 'icon.png' %}>
+       <div class="noti_img" style='margin-right: 10px;' >{{ 'some'|get_no_of_notifications:request.user }}</div>
+     </div>
 
+ <!-- footer  -->
+ <!-- <div class="footer" style='  position: fixed;
+ right: 0;
+ bottom: 0;
+ left: 0;
+ padding: 1rem;
+ background-image: linear-gradient( rgb(178, 186, 223) , rgb(241, 251, 255));
+ text-align: center;
+ font-weight: bold;
+ color: black;'>Made in one night by <strong>Prateek and Saharsh</strong>.</div> -->
+ <!-- footer  -->
 
 </body>
 </html>

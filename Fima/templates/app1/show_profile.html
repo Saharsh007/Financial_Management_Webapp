@@ -23,11 +23,10 @@
     <link href='https://fonts.googleapis.com/css?family=Amatic SC' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Advent Pro' rel='stylesheet'>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <script>
-          ('.toast').toast('show');
-    </script>
+
   </head>
   <body style='background-image: linear-gradient(white 10%, #ffffff , #ffffff   ) ; '>
+    
       {% block foo %}
       {% include "app2/main_index.html" %}
      {% endblock %}
@@ -35,7 +34,6 @@
      
 
             
-            {% if user %}                       
               
         <div class='row' style='height:100px;'>
 
@@ -54,8 +52,10 @@
                   </header>
               
                   <div class="w3-container">
-                      <p  class="some_text" style='font-size:30px;' >{{ user.email }}</p>
-                      <p class="some_text" style='font-size:40px;'> {{ user_info.dob }}</p>                
+                      <p  class="some_text" style='font-size:30px; font-weight: normal;' >{{ user.email }}</p>
+                      <p class="some_text" style='font-size:40px;font-weight: normal;'> {{ user_info.dob }}</p>
+                      <p class="some_text" style='font-size:40px;font-weight: normal;'> {{ user_info.phone_number}}</p>  
+                      <p class="some_text" style='font-size:40px;font-weight: normal;'> {{ user_info.user_address }}</p>               
                     </div>
               
                   <footer class="w3-container w3-blue">
@@ -67,7 +67,7 @@
                 <form action="{% url 'app1:profile' %}">
                     <input  href='' class="pricingTable-firstTable_table__getstart" type="submit" value="Edit profile" 
                     style='font-weight:bold; font-size:20px; background-color: rgb(98, 245, 40); color:black; margin-bottom: 20px; width: 50%;font-family:  Advent Pro; margin-left: 100px;'
-                    '>
+                    >
   
                 </form>
                 
@@ -82,7 +82,6 @@
   
           </div>
 
-            {% endif %}
 
 
         

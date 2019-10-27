@@ -19,34 +19,107 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- remove this for good font -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-    <link rel = 'stylesheet' href ="{% static "css/user_profile.css" %}"/> 
-    <link rel = 'stylesheet' href ="{% static "css/home_css.css" %}"/> 
 
-    <script>
-          ('.toast').toast('show');
-    </script>
+    <link rel = 'stylesheet' href ="{% static "css/index.css" %}"/> 
+
   </head>
-  <body style='background-image: linear-gradient(white 10%, #ffffff , #ffffff   ) ; '>
+  <body style='background-image: url({% static 'background.jpg' %});' >
       {% block foo %}
       {% include "app2/main_index.html" %}
      {% endblock %}
 
-     <div class="container">
-        <div class="jumbotron">
-          <h1>Welcome to the Djungle !</h1>
-          {% if user.is_authenticated %}
-              <h2>Hello {{ user.username }}</h2>
-          {% else %}
-              <h2>Register or Login if you'd like to</h2>
-          {% endif %}
-        </div>
-      </div>
+
+     <div class='row'>
+
+      
+    <!-- flip cart  -->
+
+    <div class='col-md-4'>
+    <div class="flip-card">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+
+            {% if user.is_authenticated %}
+                <p class='main_heading' >Hello {{ user.username }}</p>
+              </div>
+              
+              <div class="flip-card-back">
+                <p  class='main_heading'>Let's check your Transaction shall we?</p> 
+            {% else %}
+                <p  class='main_heading'>Register or Login if you would like to</p>
+                </div>
+                
+                <div class="flip-card-back">
+                  <p  class='main_heading'> There is nothing at the back , Register now you dumb fuck</p> 
+            {% endif %}
 
           </div>
         </div>
-        
+      </div>
+    </div>
+    <!-- flip cart  -->
 
+     <!-- flip cart  -->
+     <div class='col-md-4'>
+        <div class="flip-card">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+    
+                    <p class='main_heading' >Now Manage Your Finances like never before</p>
+                  </div>
+                  
+                  <div class="flip-card-back">
+                    <p  class='main_heading'>We Bring to You THE FIMA</p> 
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- flip cart  -->
+       
+            <!-- flip cart  -->
+     <div class='col-md-4'>
+        <div class="flip-card">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+    
+                    <p class='main_heading' >Make new Friends and manage Transactionwith them </p>
+                  </div>
+                  
+                  <div class="flip-card-back">
+                    <p  class='main_heading'>Use their email to connect</p> 
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- flip cart  -->
+       
+            
+  </div>
+
+
+  <h1 style='visibility: hidden;'>sajnfdsabjfbasjfasjdfbhj</h1>
+         
+
+
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
         
+      <!-- footer  -->
+      <div class="footer" style='  position: fixed;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      padding: 1rem;
+      background-image: linear-gradient( rgb(145, 155, 197) , rgb(255, 255, 255));
+      text-align: center;
+      font-weight: bold;
+      color: black;'>Made in one night by <strong>Prateek and Saharsh</strong>.</div>
+      <!-- footer  -->
       
   </body>
 </html>

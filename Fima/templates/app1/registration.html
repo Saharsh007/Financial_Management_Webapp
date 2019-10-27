@@ -3,7 +3,7 @@
 
 <html>
   <head>
-    <title>Login</title>
+    <title>Registration</title>
 
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,31 +20,94 @@
     <link rel = 'stylesheet' href ="{% static "css/user_profile.css" %}"/> 
     <link rel = 'stylesheet' href ="{% static "css/home_css.css" %}"/> 
 
-    <script>
-          ('.toast').toast('show');
-    </script>
+    <style>
+    
+    .main_heading{
+      color:black;
+      margin-left:430px;
+      margin-top: 100px;
+      font-family: Advent Pro;
+      font-size: 50px;
+      }
+      .text_field{
+        font-size:30px;
+        color:rgb(50, 51, 42);
+        font-family: Advent Pro;
+        display:table-cell;
+
+      }
+      .text_label{
+        font-size:40px;
+        color:rgb(62, 63, 54);
+        margin-bottom: 20px;
+        font-family: Advent Pro;
+        display:table-cell;
+
+      }
+      .submitbutton{
+        margin-left:120px;
+        width:240px;
+        height:80px;
+        padding-top: 10px;
+        font-family:  Advent Pro;
+        font-size:30px;
+        font-weight: bold;
+      }
+      .errorlist{
+        font-size: 150%;
+        color: rgb(146, 48, 48);
+      }
+      </style>
   </head>
-  <body style='background-image: linear-gradient(white 10%, #ffffff , #ffffff   ) ; '>
+  <body style='background-image: linear-gradient(white 10%, #a38f8f);'>
       {% block foo %}
       {% include "app2/main_index.html" %}
      {% endblock %}
+     <p class='main_heading' style='margin-left:70px;font-size: 50px;'>Register Here</p>
+
      <div class="container">
-        <div class="jumbotron">
+        <div class="jumbotron" style='background-image: linear-gradient( #dac0c0 , rgb(255, 255, 255));'>
           {% if registered %}
-            <h1>Thank you for registering!</h1>
+            <p class='main_heading' style='margin-left: 0px; font-size: 500%;'>Thank you for registering!</p>
+            <p class='main_heading' style='margin-left: 0px; font-size: 500%;' >You can login now!</p>
           {% else %}
-            <h1>Register Here</h1>
-            <h3>Just fill out the form.</h3>
-    <form enctype="multipart/form-data" method="POST">
+            <p class='main_heading' style='color:rgb(31, 109, 31);margin-left: 0px; margin-top:0px;  margin-bottom:50px; font-size: 50px;' >Fill the form</p>
+            {% if error_s1 %}
+              {{error_s1}}
+              {% elif error_s2%}
+                {{error_s2}}
+              {%endif%}
+
+    <form style='display: table;' enctype="multipart/form-data" method="POST">
+  
               {% csrf_token %}
-              {{ user_form.as_p }}
-              {{ profile_form.as_p }}
-              <input type="submit" name="" value="Register">
+              {%for field in user_form %}
+              <p style='display: table-row'></p>
+                <label class="text_label" for='name'  >{{field.label}} :</label>
+                <span  style='margin-left:400px;visibility: hidden;'>:</span>
+
+                {{field}} <br>
+               </p>
+    
+              {%endfor%}
+
+              {%for field in profile_form %}
+                <p style='display: table-row'></p>
+                <label  class="text_label" for='name'  style='margin-left:100px;' >{{field.label}} :</label>
+                <span  style='margin-left:400px;visibility: hidden;'>:</span>
+                {{field}} <br>
+               </p>
+    
+              {%endfor%}
+
+              <input class='pricingTable-firstTable_table__getstart submitbutton' style='color: rgb(54, 47, 47); '  type="submit" name="" value="Register">
             </form>
-            
+
           {% endif %}
         </div>
       </div>
+
+      
   </body>
 </html>
 

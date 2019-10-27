@@ -12,8 +12,25 @@ from django.utils import timezone
 from django.contrib.auth.hashers import check_password
 import copy
 from datetime import date
+from django.contrib.auth.signals import user_logged_out
+from django.dispatch import receiver
+from django.contrib import messages
 
 # Create your views here.
+
+is_delete_message=False
+is_update_message=False
+
+@receiver(user_logged_out)
+def on_user_logged_out(sender, request, **kwargs):
+	if(is_update_message):
+		messages.add_message(request, messages.INFO, 'Account Details Updated SuccesFully, Login Again')
+	
+	elif(is_delete_message):
+		messages.add_message(request, messages.INFO, 'Account Deleted SuccesFully, Good Bye!')
+
+	else:
+		messages.add_message(request, messages.INFO, 'You Have Logged Out SuccesFully, Good Bye!')
 
 
 def index(request):
@@ -30,6 +47,7 @@ def user_logout(request):
 
 def register(request):
 	registered=False
+	error_s = ""
 	if(request.method=='POST'):
 		user_form=UserForm(data=request.POST)
 		profile_form=UserProfileInfoForm(data=request.POST)
@@ -48,12 +66,18 @@ def register(request):
 				# If yes, then grab it from the POST form reply
 				profile.profile_pic = request.FILES['profile_pic']
 
-            # Now save model
+			# Now save model
 			profile.save()
 			registered=True
 
 		else:
 			print(user_form.errors,profile_form.errors)
+			error_s1=	str(user_form.errors)
+			error_s2 = str(profile_form.errors)
+			user_form=UserForm()
+			return render(request,'app1/registration.html',{'error_s1':error_s1,'error_s2':error_s2,'user_form':user_form,
+						   'profile_form':profile_form})
+			
 	else:
 		user_form = UserForm()
 		profile_form = UserProfileInfoForm()
@@ -64,7 +88,11 @@ def register(request):
 
 def user_login(request):
 	global is_check_notofication
+	global is_delete_message
+	global is_update_message
 	is_check_notofication=False
+	is_delete_message=False
+	is_update_message=False
 	if(request.method=="POST"):
 		username=request.POST.get('username')
 		password=request.POST.get('password')
@@ -79,7 +107,7 @@ def user_login(request):
 		else:
 			print("Someone tried to login and failed.")
 			print("They used username: {} and password: {}".format(username,password))
-			return HttpResponse("Invalid login details given")
+			return render(request, 'app1/login.html', {'failed_login':True})
 	else:
 		return render(request, 'app1/login.html', {})
 
@@ -227,13 +255,15 @@ def user_profile_view(request):
 
 @login_required
 def user_profile(request):
+	global is_update_message
 	if(request.method=='POST'):
-
 		form=UpdateProfileForm(request.POST)
 		is_clicked=True
 		if(form.is_valid()):
 			print("form is valid")
 			new_name=form.cleaned_data['name']
+			new_phone_number=form.cleaned_data['phone']
+			new_user_address=form.cleaned_data['address']
 			old_password=form.cleaned_data['old_password']
 		
 			if(check_password(old_password,request.user.password)):
@@ -247,8 +277,12 @@ def user_profile(request):
 					new_user_profile=UserProfileInfo.objects.filter(user=request.user)[0]
 					new_user.set_password(new_password)
 					new_user_profile.name=new_name
+					new_user_profile.phone_number=new_phone_number
+					new_user_profile.user_address=new_user_address
 					new_user.save()
 					new_user_profile.save()
+					is_update_message=True
+					return user_logout(request)
 				print(is_update)
 				return render(request,'app1/profile.html',{'is_update':is_update,'form':form})
 
@@ -257,7 +291,9 @@ def user_profile(request):
 		else:
 			ValidationError(_('Invalid value'), code='invalid')
 	else:
-		form=UpdateProfileForm()
+		form=UpdateProfileForm(initial={'name': UserProfileInfo.objects.filter(user=request.user)[0].name,
+		'phone':UserProfileInfo.objects.filter(user=request.user)[0].phone_number,
+		'address':UserProfileInfo.objects.filter(user=request.user)[0].user_address})
 		return render(request,'app1/profile.html',{'form':form})
 
 
@@ -274,6 +310,7 @@ def show_notification(request):
 
 @login_required
 def delete_account(request):
+	global is_delete_message
 	if(request.method=='POST'):
 		can=False
 		curr_t1=CurrentTransaction.objects.filter(user_id1=request.user)
@@ -286,7 +323,8 @@ def delete_account(request):
 			can=True
 			u=User.objects.get(username=request.user.username)
 			u.delete()
-			return render(request,'app1/delete.html',{"can":can})
+			is_delete_message=True
+			return user_logout(request)
 	else:
 		return render(request,'app1/delete.html')
 

@@ -19,11 +19,10 @@
     <!-- remove this for good font -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     <link rel = 'stylesheet' href ="{% static "css/home_css.css" %}"/> 
-    <script>
-          ('.toast').toast('show');
-    </script>
+
   </head>
-  <body style='background-image: linear-gradient(white 10%, #ffdcc2 , #b7ffb7   ) ; '>
+  <body style='
+  background-size: cover; '>
 
       {% block foo %}
       {% include "app2/main_index.html" %}
@@ -56,13 +55,6 @@
 
 
       
-      <!-- test -->
-      <div class='tabless'>
 
-      </div>
-      <!-- test -->
-      
   </body>
 </html>
-
-

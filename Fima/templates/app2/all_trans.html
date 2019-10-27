@@ -53,7 +53,8 @@
         
          </div>
 
-          {% if required_email %}     
+          {% if required_email %} 
+          {% if trans_record %}    
             <!-- test -->
             <div>
                 <form action="{% url 'app2:settle_trans' %}" method ="POST">
@@ -63,6 +64,7 @@
                 </form>
             </div>  
             <!-- testend -->
+            {%endif%}
           {% else %}
             <div>
                 <div class='shift_it' style='  margin:50px;

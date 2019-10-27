@@ -1,16 +1,19 @@
 from django.db import models
 from django.contrib.auth.models import User
 import datetime
+from django.core.validators import RegexValidator
 # Create your models here.
 
 User._meta.get_field('email')._unique = True
 class UserProfileInfo(models.Model):
 	user = models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True)
 	dob=models.DateField()
-	Categories =(("M","Male"),("F","Female"))
+	Categories =(("Male","Male"),("Female","Female"))
 	gender=models.CharField(max_length=10 , choices=Categories)
-	name=models.CharField(max_length=20,default='DefaultName')
-	profile_pic = models.ImageField(upload_to='app1/profile_pics',blank=True)
+	name=models.CharField(max_length=20,default='Your Name')		
+	profile_pic = models.ImageField(upload_to='app1/profile_pics',blank=True,default='app1/profile_pics/default.png')
+	phone_number = models.CharField(max_length=10,blank=True,validators=[RegexValidator('^[0-9]{10}$',message="Invalid Number")])
+	user_address=models.CharField(max_length=300,blank=True)
 	def __str__(self):
   		return self.user.username
 

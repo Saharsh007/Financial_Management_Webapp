@@ -1,4 +1,5 @@
 from django import template
+from app1.views import notification_count
 
 register = template.Library()
 @register.filter(name='value_of_key')
@@ -122,3 +123,14 @@ def check_object_size(object,curr_user):
         return True
     else:
         return False
+
+
+
+@register.filter(name='get_no_of_notifications')
+
+def get_no_of_notifications(string_no_use,curr_user):
+    """
+    This returns the value of a dict given its key
+    """ 
+    count = notification_count(curr_user)
+    return count
