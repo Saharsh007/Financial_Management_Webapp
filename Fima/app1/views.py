@@ -198,8 +198,8 @@ def make_transaction(request):
 							new_transaction.borrowed=UserProfileInfo.objects.filter(user=
 								to_friend[0].user_id2)[0].name
 							
-							message_curr ="You Have Lent Rs"+str(amount)+" to "+to_friend[0].user_id2.email+" on "+str(date.today())
-							message1="You Have Borrowed Rs"+str(amount)+" from "+request.user.email +" on "+str(date.today())
+							message_curr ="You Have Lent Rs "+str(amount)+" to "+to_friend[0].user_id2.email+" on "+str(date.today())
+							message1="You Have Borrowed Rs "+str(amount)+" from "+request.user.email +" on "+str(date.today())
 							add_notification(to_friend[0].user_id2,message1)
 							add_notification(request.user,message_curr)
 							
@@ -301,7 +301,8 @@ def user_profile(request):
 
 @login_required
 def show_notification(request):
-	old_not=list(OldNotification.objects.filter(user_id=request.user))
+	old_not=list(OldNotification.objects.filter(user_id=request.user)) 
+	old_not = reversed(old_not)
 	new_not=list(NewNotification.objects.filter(user_id=request.user))
 	move_notification(request.user)
 	return render(request,'app1/notification.html',{'old_not':old_not,'new_not':new_not})
@@ -322,8 +323,13 @@ def delete_account(request):
 		else:
 			can=True
 			u=User.objects.get(username=request.user.username)
-			u.delete()
 			is_delete_message=True
+			message1="You Friend "+ str(u.email) +" has left FIMA after settling all the expenses " +" on "+str(date.today())
+			all_friends=list(Friends.objects.all())
+			for friends in all_friends:
+				if(friends.user_id1==u):
+					add_notification(friends.user_id2,message1)
+			u.delete()
 			return user_logout(request)
 	else:
 		return render(request,'app1/delete.html')

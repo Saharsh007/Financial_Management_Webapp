@@ -1,5 +1,5 @@
 .flip-card {
-    margin-left:50px ;
+    margin-left:40px ;
     margin-top:100px;
     margin-bottom:10px;
 
@@ -36,12 +36,12 @@
 }
   
   .flip-card-front {
-    background-color: rgb(15, 250, 113) ;
+    background-color: #ffdcc2;
     color: rgb(31, 24, 24);
   }
   
   .flip-card-back {
-    background-color: #2980b9;
+    background-color:  #b7ffb7;
     color: white;
     transform: rotateY(180deg);
   }
@@ -51,10 +51,10 @@
     color:rgb(53, 42, 42);
 
     font-family: Advent Pro;
-    font-size: 40px;
-padding-top: 20px;
-padding-left: 10px;  
-padding-right: 10px;  
+    font-size: 35px;
+    padding-top: 20px;
+    padding-left: 10px;  
+    padding-right: 10px;  
 
    }
     

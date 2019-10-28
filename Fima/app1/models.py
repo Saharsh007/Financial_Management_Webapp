@@ -24,7 +24,7 @@ class CurrentTransaction(models.Model):
 	amount=models.IntegerField()
 	lent=models.CharField(max_length=30)
 	borrowed=models.CharField(max_length=30)
-	desc=models.CharField(max_length=100)
+	desc=models.CharField(max_length=400)
 
 class Friends(models.Model):
 	user_id1=models.ForeignKey(User,on_delete=models.CASCADE,related_name='%(class)s_related1')
@@ -39,16 +39,16 @@ class TransactionHistory(models.Model):
 	Amount=models.IntegerField()
 	lent=models.CharField(max_length=30)
 	borrowed=models.CharField(max_length=30)
-	Desc=models.CharField(max_length=100)
+	Desc=models.CharField(max_length=400)
 
 class OldNotification(models.Model):
 	user_id=models.ForeignKey(User,on_delete=models.CASCADE)
-	desc=models.CharField(max_length=100)
+	desc=models.CharField(max_length=400)
 	date=models.DateField()
 
 class NewNotification(models.Model):
 	user_id=models.ForeignKey(User,on_delete=models.CASCADE)
-	desc=models.CharField(max_length=100)
+	desc=models.CharField(max_length=400)
 	date=models.DateField(default=datetime.date.today)
 
 

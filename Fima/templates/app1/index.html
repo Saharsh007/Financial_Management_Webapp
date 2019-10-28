@@ -31,26 +31,52 @@
 
      <div class='row'>
 
+
+        {% if messages %}
+        <!-- flip cart  -->
+        <div class='col-md-4'>
+           <div class="flip-card">
+               <div class="flip-card-inner">
+                 <div class="flip-card-front">
+       
+                     <ul class="messages">
+                         {% for message in messages %}
+                         <li{% if message.tags %} class="{{ message.tags }}"{% endif %}><p class='main_heading' >{{ message }}</p></li>
+                         {% endfor %}
+
+                     </div>
+                      </ul>
+
+                     <div class="flip-card-back">
+                       <p  class='main_heading'>Use the New Password</p> 
+                 </div>
+               </div>
+             </div>
+           </div>
+           <!-- flip cart  -->
+       {% endif %}
+
+
       
     <!-- flip cart  -->
 
     <div class='col-md-4'>
     <div class="flip-card">
         <div class="flip-card-inner">
-          <div class="flip-card-front">
+          <div class="flip-card-front" style='background-color:  #b7ffb7;'>
 
             {% if user.is_authenticated %}
                 <p class='main_heading' >Hello {{ user.username }}</p>
               </div>
               
-              <div class="flip-card-back">
+              <div class="flip-card-back"  style='background-color:  #ffdcc2;'>
                 <p  class='main_heading'>Let's check your Transaction shall we?</p> 
             {% else %}
                 <p  class='main_heading'>Register or Login if you would like to</p>
                 </div>
                 
-                <div class="flip-card-back">
-                  <p  class='main_heading'> There is nothing at the back , Register now you dumb fuck</p> 
+                <div class="flip-card-back" style='background-color:  #ffdcc2;'>
+                  <p  class='main_heading'> There is nothing at the back , Register now!</p> 
             {% endif %}
 
           </div>
@@ -80,13 +106,81 @@
      <div class='col-md-4'>
         <div class="flip-card">
             <div class="flip-card-inner">
+              <div class="flip-card-front"  style='background-color:  #b7ffb7;'>
+    
+                    <p class='main_heading' >Make new Friends and manage Transaction with them </p>
+                  </div>
+                  
+                  <div class="flip-card-back" style='background-color:  #ffdcc2;'>
+                    <p  class='main_heading'>Use their email to connect</p> 
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- flip cart  -->
+        
+    <!-- flip cart  -->
+     <div class='col-md-4'>
+        <div class="flip-card">
+            <div class="flip-card-inner">
               <div class="flip-card-front">
     
-                    <p class='main_heading' >Make new Friends and manage Transactionwith them </p>
+                    <p class='main_heading' >Problem of Forgetting Whom you lent and How much</p>
                   </div>
                   
                   <div class="flip-card-back">
-                    <p  class='main_heading'>Use their email to connect</p> 
+                    <p  class='main_heading'>No Worries FIMA will solve it</p> 
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- flip cart  -->
+
+      <!-- flip cart  -->
+     <div class='col-md-4'>
+        <div class="flip-card">
+            <div class="flip-card-inner">
+              <div class="flip-card-front" style='background-color:  #b7ffb7;'>
+    
+                    <p class='main_heading' >Connect with your friends and add how much amount they have borrowed.</p>
+                  </div>
+                  
+                  <div class="flip-card-back" style='background-color:  #ffdcc2;'>
+                    <p  class='main_heading'>Even if they clear out the Transaction , You get the notification</p> 
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- flip cart  -->
+
+      <!-- flip cart  -->
+     <div class='col-md-4'>
+        <div class="flip-card">
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+    
+                    <p class='main_heading' >Get History of all your Transactions Ever</p>
+                  </div>
+                  
+                  <div class="flip-card-back">
+                    <p  class='main_heading'>With highlighted color to show amount borrowed or lent</p> 
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- flip cart  -->
+
+      <!-- flip cart  -->
+     <div class='col-md-4'>
+        <div class="flip-card">
+            <div class="flip-card-inner">
+              <div class="flip-card-front" style='background-color:  #b7ffb7;'>
+    
+                    <p class='main_heading' >Made as a part of DBMS project in course CO301</p>
+                  </div>
+                  
+                  <div class="flip-card-back" style='background-color:  #ffdcc2;'>
+                    <p  class='main_heading'>By<br>Prateek Sahu : 17CO130<br>Kumar Saharsh:17CO121</p> 
               </div>
             </div>
           </div>
@@ -97,17 +191,11 @@
   </div>
 
 
-  <h1 style='visibility: hidden;'>sajnfdsabjfbasjfasjdfbhj</h1>
+  <h1 style='visibility: hidden;'>this is just to add </h1>
          
 
 
-        {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
+
         
       <!-- footer  -->
       <div class="footer" style='  position: fixed;
@@ -118,7 +206,7 @@
       background-image: linear-gradient( rgb(145, 155, 197) , rgb(255, 255, 255));
       text-align: center;
       font-weight: bold;
-      color: black;'>Made in one night by <strong>Prateek and Saharsh</strong>.</div>
+      color: black;'>Made by by <strong>Prateek & Saharsh. @All Rights Reserved.</strong>.</div>
       <!-- footer  -->
       
   </body>

@@ -37,7 +37,7 @@
                              
 
                     {% if  t|check_for_history_of_transaction:curr_user %}    
-                                <td style='color: rgb(133, 127, 187); font-size: 30px;'>{{ t.user_id2 }}</td>
+                                <td style='color: rgb(133, 127, 187); font-size: 30px;'>{{ t|return_the_friend:curr_user }}</td>
                         {% if t|find_trans:curr_user %}
                                 <td style='color:rgb(255, 115, 0); font-size: 30px; '>{{t.Amount}}</td>
                                 <td style='color:rgb(255, 115, 0); font-size: 30px;'>Borrowed</td>
@@ -52,6 +52,7 @@
                                 <td style='color: rgb(133, 127, 187); font-size: 20px;' > {{t.Desc}}</td>
                             </tr>
                     {%endif%}
+                    
                 {% endfor %}
             </table>
             {%else%}

@@ -16,7 +16,6 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 
   <!-- remove this for good font -->
-  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
   <link href='https://fonts.googleapis.com/css?family=Advent Pro' rel='stylesheet'>
 
   <link rel = 'stylesheet' href ="{% static "css/home_css.css" %}"/> 
@@ -24,9 +23,9 @@
   <style>
 
     .pricingTable-firstTable_table:nth-of-type(n):before {
-      content: 'Most Popular';
+      content: 'Your Friend';
       position: absolute;
-      color: white;
+      color: rgb(0, 0, 0);
       display: block;
       background-color: #3bbdee;
       text-align: center;
@@ -36,11 +35,11 @@
       width: 65px;
       border-radius: 50%;
       box-sizing: border-box;
-      font-size: 0.5em;
-      padding-top: 22px;
+      font-size: 10px;
+      padding-top: 15px;
       text-transform: uppercase;
       letter-spacing: 0.13em;
-      transition: all 0.5s ease;
+      transition: all 0.8s ease;
 
     }
 
@@ -48,7 +47,6 @@
   html,body{
     font-family:Advent Pro;  
   }
-
   .noti_img{
     height:40px ;
     widows: 40px;
@@ -56,8 +54,38 @@
     right:0;
     font-size: 30px;
   }
+
+
+   .rotating{
+    height:40px ;
+    widows: 40px;
+    position: absolute;
+    right:0;
+    font-size: 30px;
+    transition: transform 1s linear;
+    transform-origin: center;
+    transform-style: preserve-3D;
     
+  }
+  .rotating:hover{
+    transform: rotateY(720deg);
+    position: absolute;
+    right:0;
+    font-size: 30px;
+    transition: 2s ease;
+    background-color: rgb(250, 108, 108);
+    border-radius: 30%;
+  }
+
+  .rotatings:not(hover){
+    height:80px ;
+    widows: 80px;
+    transition: 1s ease;
+  }
+    
+
     </style>
+
 
 </head>
 <body>
@@ -96,22 +124,26 @@
       </div>
     </nav>
     <!-- navbar end -->
+    {% if user.is_authenticated %}
     <div >
-      <img  class="noti_img" style='margin-right: 35px;' src={% static 'icon.png' %}>
+     <a href='{% url 'app1:notification' %}'> <img  class="rotating" style='margin-right: 35px;' src={% static 'icon.png' %} > </a>
        <div class="noti_img" style='margin-right: 10px;' >{{ 'some'|get_no_of_notifications:request.user }}</div>
      </div>
+     {% endif %}
 
- <!-- footer  -->
- <!-- <div class="footer" style='  position: fixed;
- right: 0;
- bottom: 0;
- left: 0;
- padding: 1rem;
- background-image: linear-gradient( rgb(178, 186, 223) , rgb(241, 251, 255));
- text-align: center;
- font-weight: bold;
- color: black;'>Made in one night by <strong>Prateek and Saharsh</strong>.</div> -->
- <!-- footer  -->
+      <!-- footer  -->
+      <!-- <div class="footer" style='  position: fixed;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      padding: 1rem;
+      background-image: linear-gradient( rgb(145, 155, 197) , rgb(255, 255, 255));
+      text-align: center;
+      font-weight: bold;
+      color: black;'>Made by by <strong>Prateek & Saharsh. @All Rights Reserved.</strong>.</div> -->
+      <!-- footer  -->
+
+
 
 </body>
 </html>

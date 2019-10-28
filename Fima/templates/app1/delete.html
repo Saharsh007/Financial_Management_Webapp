@@ -52,18 +52,18 @@
      <div class="container">
         <div class="jumbotron">
         {% if can %}
-            <p class='main_heading' >Account Deleted SuccesFully</p>
+            <p class='main_heading' >Account Deleted Successfully</p>
         {% elif can is False %}
-            <p class='main_heading' >You Have some unsettled Transaction Remaining , Settle them to Delete Account</p>
+            <p class='main_heading' >You Have Some Unsettled Transaction Remaining , Settle Them to Delete Account</p>
         {% else %}
-          <p class='main_heading'>Are You Sure , You Want Delete Account !</p>
+          <p class='main_heading'>Are You Sure , You Want Delete Your Account !</p>
           {% if user.is_authenticated %}
               <form method='POST'>
                     {%csrf_token%}
                   <input class='pricingTable-firstTable_table__getstart submitbutton' style='color: rgb(54, 47, 47); background-color: red;' type="submit" name="" value="Yes , Delete My Account">
               </form>
           {% else %}
-              <p class='main_heading' >Register or Login if you'd like to</p>
+              <p class='main_heading' >Register or Login to use the App</p>
           {% endif %}
         {% endif %}
         </div>
