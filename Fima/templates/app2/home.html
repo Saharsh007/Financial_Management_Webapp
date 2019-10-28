@@ -5,6 +5,8 @@
 
 <html lang="en" >
 <head>
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
+
   <meta charset="UTF-8">
   <title>HOME</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -64,13 +66,23 @@
 
   <table style='margin-left: 200px; width: 80%; font-weight: bold;text-align:center;'>
       <thead >
-          <th style=' color: rgb(47, 53, 65); font-size: 40px; text-align:center;'>Total</th>
+          {% if all_details|check_sign_for_color %}
+          <th style=' color:  rgb(0, 255, 0); font-size: 40px; text-align:center;'>Total</th>
+          {%else%}
+          <th style=' color:rgb(255, 115, 0); font-size: 40px; text-align:center;'>Total</th>
+          {%endif%}
           <th style='color: rgb(0, 255, 0); font-size: 40px; text-align:center;' >Lent</th>
           <th style='color: rgb(255, 115, 0); font-size: 40px;text-align:center;' >Borrowed</th>
       </thead>
       <tr>
         
-        <td style='color: rgb(30, 35, 44); font-size: 40px;'>{{ all_details|value_of_key:'total'}}</td>
+        {% if all_details|check_sign_for_color %}
+        <td style='color: rgb(0, 255, 0); font-size: 40px;'>{{ all_details|return_pos:'total'}}</td>
+        {%else%}
+        <td style='color: rgb(255, 115, 0); font-size: 40px;'>{{ all_details|return_pos:'total'}}</td>
+
+        {%endif%}
+
         <td style='color: rgb(0, 255, 0); font-size: 40px;'>{{ all_details|value_of_key:'pos'}}</td>
         <td style='color: rgb(255, 115, 0); font-size: 40px;'>{{ all_details|value_of_key:'neg'}}</td>
       </tr>

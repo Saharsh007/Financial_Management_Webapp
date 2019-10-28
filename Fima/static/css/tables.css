@@ -1,6 +1,6 @@
 table {
 
-  border: 8px solid rgb(120, 151, 200);
+  border: 8 px solid rgb(120, 151, 200);
 
   border-collapse: collapse;
   margin-left:100px;
@@ -15,7 +15,7 @@ th{
   border-collapse: collapse;
   font-size: 40px;
   color:rgb(8, 14, 8);
-  margin-left: 20px;
+  margin-left: 2px;
 }
 
 td{

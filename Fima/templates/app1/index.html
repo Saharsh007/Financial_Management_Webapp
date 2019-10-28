@@ -6,6 +6,7 @@
 <html>
   <head>
     <title>Main</title>
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
 
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -66,7 +67,7 @@
           <div class="flip-card-front" style='background-color:  #b7ffb7;'>
 
             {% if user.is_authenticated %}
-                <p class='main_heading' >Hello {{ user.username }}</p>
+                <p class='main_heading' style='font-size:25px; '>Hello {{ user.username }}</p>
               </div>
               
               <div class="flip-card-back"  style='background-color:  #ffdcc2;'>

@@ -136,7 +136,7 @@ def home(request):
             # print(str(record.user_id1)+'test2')
             friends_amount[ str(record.user_id1) ] -= int(record.amount)
             all_details['neg'] +=  int(record.amount)
-    all_details['total'] = abs(all_details['pos'] + all_details['neg'])
+    all_details['total'] = (all_details['pos'] -  all_details['neg'])
     #percent of distribution
     try:
         all_details['pos_ratio'] =  int( all_details['pos'] / ( all_details['pos'] + all_details['neg']) ) *100

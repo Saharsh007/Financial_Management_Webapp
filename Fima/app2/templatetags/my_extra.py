@@ -1,7 +1,23 @@
 from django import template
 from app1.views import notification_count
 
+
+
 register = template.Library()
+
+
+@register.filter(name='check_sign_for_color')
+
+def check_sign_for_color(dictionary):
+    """
+    This tells total is positive
+    """
+    if dictionary['total'] >= 0:
+        return True
+    else:
+        return False
+
+
 @register.filter(name='value_of_key')
 
 def value_of_key(dictionary,key):
@@ -39,9 +55,9 @@ def find_trans(trans,curr_email):
     This returns if the  transactions which has user1 as curr_user
     """
     if str(trans.user_id1) == curr_email:
-        return True
+        return False
     else:
-        return False 
+        return True 
 
 
         
